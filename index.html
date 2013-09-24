@@ -12,8 +12,9 @@
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
 
-        <!-- Custom styles for this template -->
-        <link href="css/navbar.css" rel="stylesheet">
+        <!-- custom bootstrap theme -->
+        <link href="css/bootstrap-theme.css" rel="stylesheet">
+
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -41,14 +42,21 @@
                         <li><a href="#">Link</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="./">Default</a></li>
+                        <li><a href="./">Settings</a></li>
+                        <li><a href="./">Logout</a></li>
                    </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </div>
 
         <div class="container">
-            <!-- Main component for a primary marketing message or call to action -->
+            <div class="row">
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-default">Compose</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
             <div class="row">
                 <div id="sidebar" class="col-sm-3">
                     <div class="well sidebar-nav">
@@ -62,6 +70,11 @@
 
                 <div class="col-sm-9">
                     <table class="table">
+                        <tr>
+                            <th>Sender</th>
+                            <th>Content</th>
+                            <th>Date</th>
+                        </tr>
                         <tr>
                             <td>nigerianprince@example.com</td>
                             <td><b>I've been missing you</b> I need your help urgently</td>
