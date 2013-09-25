@@ -7,7 +7,7 @@
         <meta name="author" content="">
         <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-        <title>Navbar Template for Bootstrap</title>
+        <title>Postier</title>
 
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -24,51 +24,44 @@
     </head>
 
     <body>
-        <div class="container">
-            <!-- Static navbar -->
-            <div class="navbar navbar-default navbar-inverse">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <!-- Static navbar -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Postman</a>
+                    <a class="brand" href="#">Postman</a>
+                    <div class="nav-collapse collapse">
+                        <p class="navbar-text pull-right">
+                            Logged in as <a href="#" class="navbar-link">Username</a>
+                        </p>
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./">Settings</a></li>
-                        <li><a href="./">Logout</a></li>
-                   </ul>
-                </div><!--/.nav-collapse -->
             </div>
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-default">Compose</button>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div id="sidebar" class="col-sm-3">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div id="sidebar" class="span3">
                     <div class="well sidebar-nav">
-                        <ul class="nav">
-                            <li>Inbox</li>
-                            <li>Important</li>
-                            <li>Sent Mail</li>
+                        <ul class="nav nav-list">
+                            <li>
+                                <button type="button" class="btn btn-default">Compose</button>
+                            </li>
+                            <li ng-repeat="inbox in inboxes">{{inbox.name}}</li>
                         </ul>
                     </div>    
                 </div>
 
-                <div class="col-sm-9">
+                <div class="span9">
                     <table class="table">
                         <tr>
                             <th>Sender</th>
@@ -100,5 +93,7 @@
                 </div>
             </div> <!-- /row -->
         </div> <!-- /container -->
+        <script type="text/javascript" src="js/angular.js"></script>
+
     </body>
 </html>
