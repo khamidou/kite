@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +52,7 @@
             <div class="row-fluid">
                 <div id="sidebar" class="span3">
                     <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
+                        <ul class="nav nav-list" ng-controller="InboxListController">
                             <li>
                                 <button type="button" class="btn btn-default">Compose</button>
                             </li>
@@ -94,6 +94,7 @@
             </div> <!-- /row -->
         </div> <!-- /container -->
         <script type="text/javascript" src="js/angular.js"></script>
+        <script type="text/javascript" src="js/controllers.js"></script>
 
     </body>
 </html>
