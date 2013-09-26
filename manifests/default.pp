@@ -1,0 +1,3 @@
+package { "elvis":
+    ensure => present,
+}
