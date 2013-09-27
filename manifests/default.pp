@@ -1,3 +1,5 @@
-package { "elvis":
+$packages = ["postfix"]
+
+package { $packages:
     ensure => present,
 }
