@@ -32,6 +32,9 @@ service {'postfix':
     require => Package["postfix"]
 }
 
+# nginx
+include nginx
+
 # code comes from : https://bitbucket.org/daks/puppet-postfix/src/2e93e657cab6/manifests/definitions/config.pp
 define postfix_config ($ensure = present, $value, $nonstandard = false) {
       exec {"postconf -e ${name}='${value}'":
@@ -49,4 +52,18 @@ postfix_config { 'home_mailbox':
     value => "Maildir/",
 }
 
+# deliver a copy of all the received emails to user kite
+postfix_config { 'always_bcc':
+    value => "kite",
+}
 
+# deploy files
+if $is_virtual == 'true' {
+    file {'/home/kite/app':
+        ensure => 'link',
+        target => '/vagrant/src',
+        owner => 'kite',
+    }
+
+    # FIXME: copy/deploy files correctly if not running in vagrant
+}

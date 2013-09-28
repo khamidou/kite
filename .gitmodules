@@ -1,3 +1,6 @@
-[submodule "puppet_modules/puppet-nginx"]
-	path = puppet_modules/puppet-nginx
+[submodule "puppet_modules/nginx"]
+	path = puppet_modules/nginx
 	url = git://github.com/puppetlabs/puppetlabs-nginx.git
+[submodule "puppet_modules/stdlib"]
+	path = puppet_modules/stdlib
+	url = git@github.com:puppetlabs/puppetlabs-stdlib.git
