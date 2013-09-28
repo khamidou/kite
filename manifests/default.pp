@@ -35,6 +35,11 @@ service {'postfix':
 # nginx
 include nginx
 
+nginx::resource::vhost {'kiteapp':
+    ensure => present,
+    www_root => '/home/kite/app',
+}
+
 # code comes from : https://bitbucket.org/daks/puppet-postfix/src/2e93e657cab6/manifests/definitions/config.pp
 define postfix_config ($ensure = present, $value, $nonstandard = false) {
       exec {"postconf -e ${name}='${value}'":
