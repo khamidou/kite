@@ -6,5 +6,4 @@ Vagrant.configure("2") do |config|
     config.vm.provision :puppet
     config.vm.host_name = "example.com"
     config.vm.network "private_network", ip: "192.168.50.4"
-    #config.vm.network :bridged
 end
