@@ -2,7 +2,7 @@ exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }
 
-$packages = ["postfix"]
+$packages = ["postfix", "python", "bpython"]
 
 group { "kite":
     ensure => "present"
