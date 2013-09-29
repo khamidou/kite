@@ -1,7 +1,24 @@
+exec {"apt-get update":
+        path =>  ["/usr/bin/", "/usr/sbin"],
+}
+
 $packages = ["postfix"]
 
 group { "kite":
     ensure => "present"
+}
+
+package { $packages:
+    ensure => present,
+    require => Exec["apt-get update"]
+}
+
+service {'postfix':
+    ensure => running,
+    enable => true,
+    hasstatus => true,
+    hasrestart => true,
+    require => Package["postfix"]
 }
 
 user { "kite":
@@ -20,25 +37,20 @@ file { "/var/kitemail":
     group => "kite",
 }
 
-package { $packages:
-    ensure => present,
-}
-
-service {'postfix':
-    ensure => running,
-    enable => true,
-    hasstatus => true,
-    hasrestart => true,
-    require => Package["postfix"]
-}
 
 # nginx
-include nginx
-
-nginx::resource::vhost {'kiteapp':
-    ensure => present,
-    www_root => '/home/kite/app',
+class {'nginx':
+    server_name => "example.com",
+    appdir => "/home/kite/app",
+    require => Exec["apt-get update"]
 }
+
+#nginx::resource::location {'kiteapp':
+#    ensure => present,
+#  www_root => '/home/kite/app',
+#    location => '/',
+#    vhost => 'kiteapp'
+#}
 
 # code comes from : https://bitbucket.org/daks/puppet-postfix/src/2e93e657cab6/manifests/definitions/config.pp
 define postfix_config ($ensure = present, $value, $nonstandard = false) {
