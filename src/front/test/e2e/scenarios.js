@@ -4,11 +4,15 @@
 
 describe('my app', function() {
 
-  beforeEach(function() {
-    browser().navigateTo('../../app/index.html');
-  });
+    beforeEach(function() {
+      browser().navigateTo('../../app/index.html');
+    });
 
-
+    it('should redirect index.html to index.html#/phones', function() {
+        browser().navigateTo('../../app/index.html');
+        expect(browser().location().url()).toBe('/phones');
+    });
+/*
   it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
     expect(browser().location().url()).toBe("/view1");
   });
@@ -42,4 +46,5 @@ describe('my app', function() {
     });
 
   });
+*/
 });
