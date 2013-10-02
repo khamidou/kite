@@ -14,3 +14,10 @@ padding: 9px 0;
        padding-right: 5px;
     }
 }
+
+.loginPage .loginContainer {
+    max-width:  340px;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
