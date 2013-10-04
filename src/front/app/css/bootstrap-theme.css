@@ -16,27 +16,25 @@ padding: 9px 0;
 }
 
 .loginPage .loginContainer {
-    max-width: 340px;
+    width: 340px;
 }
 
 .loginPage .loginContainer .header {
     background-image: url('../img/mail_border.png');
     border: 1px solid black;
     height: 10px;
-    max-width: 340px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 
 }
 
 .loginPage .loginContainer .loginForm {
-    max-width: 340px;
     border: 1px solid black;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 10px;
 }
 
-.btn .btn-primary {
-    background-color: #4162AF !important;
+button .btn .btn-primary  {
+    background-image: linear-gradient(to bottom, red, #4162AF);
 }
