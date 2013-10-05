@@ -35,6 +35,44 @@ padding: 9px 0;
     padding: 10px;
 }
 
-button .btn .btn-primary  {
-    background-image: linear-gradient(to bottom, red, #4162AF);
+button.btn.btn-primary  {
+    background-image: linear-gradient(to bottom, #889ED3, #4162AF);
+    background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: none;
+  background-position: none;
+  background-image: linear-gradient(to bottom, #A6B7DE, #889ED3);
+  background-image: -webkit-linear-gradient(top, #A6B7DE, #889ED3);
+}
+
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+    background-color: #FDFED7;
+    border-color: none;
+    -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+
 }
