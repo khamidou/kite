@@ -76,3 +76,12 @@ input[type="color"]:focus,
           box-shadow: none;
 
 }
+
+.btn-compose {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+ul.inbox-list li {
+    line-height: 18px;
+}

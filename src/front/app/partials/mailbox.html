@@ -25,11 +25,19 @@
 
     <div class="container-fluid">
         <div class="row-fluid">
+            <div class="span4 offset3">
+                <button class="btn">Select</button>
+                <button class="btn">Reload</button>
+                <button class="btn">More</button>
+            </div>
+        </div>
+
+        <div class="row-fluid">
             <div id="sidebar" class="span3">
                 <div class="well sidebar-nav">
-                    <ul class="nav nav-list" ng-controller="InboxListController">
+                    <ul class="nav nav-list inbox-list" ng-controller="InboxListController">
                         <li>
-                            <button type="button" class="btn btn-default">Compose</button>
+                            <button type="button" class="btn btn-primary btn-compose">Compose</button>
                         </li>
                         <li ng-repeat="inbox in inboxes">{{inbox.name}}</li>
                     </ul>
