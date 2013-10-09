@@ -85,3 +85,8 @@ input[type="color"]:focus,
 ul.inbox-list li {
     line-height: 18px;
 }
+
+.navbar-header {
+    background-image: url('../img/mail_border.png');
+    height: 3px;
+}
