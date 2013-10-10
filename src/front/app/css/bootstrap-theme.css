@@ -35,6 +35,10 @@ padding: 9px 0;
     padding: 10px;
 }
 
+button.btn {
+    border-radius: 3px;
+}
+
 button.btn.btn-primary  {
     background-image: linear-gradient(to bottom, #889ED3, #4162AF);
     background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
@@ -82,6 +86,10 @@ input[type="color"]:focus,
     margin-bottom: 10px;
 }
 
+ul.inbox-list {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 ul.inbox-list li {
     line-height: 18px;
 }
@@ -89,4 +97,12 @@ ul.inbox-list li {
 .navbar-header {
     background-image: url('../img/mail_border.png');
     height: 3px;
+}
+
+.navbar-inner.topbar {
+    background: none;
+}
+
+.buttonsRow {
+    padding-bottom: 5px;
 }
