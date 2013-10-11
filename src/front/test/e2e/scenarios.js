@@ -8,9 +8,9 @@ describe('my app', function() {
       browser().navigateTo('../../app/index.html');
     });
 
-    it('should redirect index.html to index.html#/phones', function() {
+    it('should redirect index.html to index.html#/login', function() {
         browser().navigateTo('../../app/index.html');
-        expect(browser().location().url()).toBe('/phones');
+        expect(browser().location().url()).toBe('/login');
     });
 /*
   it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
