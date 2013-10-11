@@ -100,7 +100,8 @@ ul.inbox-list li {
 }
 
 .navbar-inner.topbar {
-    background: none;
+    background: #F2F2F2;
+    box-shadow: none;
 }
 
 .buttonsRow {
