@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name <%= server_name %>;
+    server_name _;
     access_log /var/log/nginx/<%= server_name %>.access.log;
     charset utf-8;
     client_max_body_size 8m;
@@ -9,7 +9,7 @@ server {
     gzip_types text/plain text/xml text/css application/javascript application/x-javascript application/json;
 
     location / {
-        root <%= appdir %>/front/;
+        root <%= appdir %>/front/app/;
         autoindex off;
         expires 1M;
     }
