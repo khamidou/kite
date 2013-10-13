@@ -9,8 +9,8 @@ angular.module('KiteMail.controllers', []).
             {"name": "Trash", },
             {"name": "Spam",  },];
             
-}).controller('MailsListController', function($scope) {
-        $scope.mails = [
+}).controller('MailsListController', ['$scope', 'Emails', function($scope, Emails) {
+        $scope.mails = Emails.query(); /*[
             {"from": "random.spam@spam.com",
              "to": "you",
              "subject": "-50% promo on everything !",
@@ -30,10 +30,8 @@ angular.module('KiteMail.controllers', []).
              "subject": "Welcome to Kite !",
              "contents": "This is the basic inbox page. As you can see, it looks a lot like a famous email service.",
              "date": new Date(),
-            }];
-    
-    
-}).controller('LoginController', function($scope) {
+            }]; */
+}]).controller('LoginController', function($scope) {
     
     
 });
