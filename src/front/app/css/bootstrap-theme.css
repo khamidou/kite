@@ -3,7 +3,9 @@ body {
     padding-bottom: 40px;
 }
 .sidebar-nav {
-padding: 9px 0;
+    padding: 9px 0;
+    box-shadow: none;
+    border-radius: 3px;
 }
 
 @media (max-width: 980px) {
