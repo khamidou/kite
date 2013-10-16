@@ -1,5 +1,5 @@
 body {
-    padding-top: 50px;
+    padding-top: 60px;
     padding-bottom: 40px;
 }
 .sidebar-nav {
@@ -108,4 +108,10 @@ ul.inbox-list li {
 
 .buttonsRow {
     padding-bottom: 5px;
+}
+
+.searchBox input {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 28px;
 }
