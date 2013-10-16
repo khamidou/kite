@@ -4,8 +4,14 @@
 
 
 angular.module('KiteMail.directives', []).
-  directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-      elm.text(version);
-    };
-  }]);
+  directive('baseLayout', function() {
+    return {
+     restrict: 'A',
+     scope: {
+         title: '@',
+     },
+     transclude: true,
+     replace: true,
+     templateUrl: 'partials/baselayout.html',
+    }
+});
