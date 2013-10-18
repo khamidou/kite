@@ -5,11 +5,14 @@
 describe('controllers', function(){
     beforeEach(module('KiteMail.controllers'));
 
+    
     describe('MailsListController', function() {
-        it('should do an ajax request to query mails', inject(function($controller, $httpBackend) {
-            var scope = {};
-            this.$httpBackend.expectGET('/karim/mail', 200);
-            var ctrl = $controller("MailsListController", {$scope: scope})
+        it('should do an ajax request to query mails', inject(function($injector) {
+            var $httpBackend = $injector.get('$httpBackend');
+            $httpBackend.expectGET('/karim/mail', 200);
+
+            var $rootScope = $injector.get('$rootScope');
+            var ctrl = $injector.get("MailsListController", {$scope: $rootScope})
             this.$httpBackend.flush();
         }));
 
