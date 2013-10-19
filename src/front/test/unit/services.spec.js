@@ -8,5 +8,5 @@ describe('service', function() {
     describe('EmailsService', function() {
     it('should do an ajax request to get the list of services', inject(function() {
         
-    }));
+    }))});
 });
