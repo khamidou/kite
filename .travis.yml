@@ -11,4 +11,3 @@ before_script:
 
 script:
   - karma start ./src/front/config/karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
-  - karma start ./src/front/config/karma-e2e.conf.js --reporters=dots --browsers=Firefox
