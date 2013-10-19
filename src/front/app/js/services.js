@@ -5,9 +5,16 @@
 angular.module('KiteMail.services', ['ngResource']).
 factory('Emails', ['$resource',
     function($resource) {
-        return $resource(':user/mail/', {}, {
+        var data = $resource('/kite/:user/mail/', {}, {
             query: {method:'GET', params:{user: "karim"}, isArray:true}   
         });
+
+        // convert date string to js date objects
+        for(var i = 0; i < data.length; i++) {
+            data[i]["date"] = new Date(data[i]["date"]);
+        }
+
+        return data;
     }
 ]);
 
