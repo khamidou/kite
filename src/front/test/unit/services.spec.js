@@ -3,12 +3,10 @@
 /* jasmine specs for services go here */
 
 describe('service', function() {
-  beforeEach(module('KiteMail.services'));
+    beforeEach(module('KiteMail.services'));
 
-
-  describe('version', function() {
-    it('should return current version', inject(function(version) {
-      expect(version).toEqual('0.1');
+    describe('EmailsService', function() {
+    it('should do an ajax request to get the list of services', inject(function() {
+        
     }));
-  });
 });

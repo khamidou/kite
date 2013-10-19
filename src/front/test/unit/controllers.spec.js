@@ -3,17 +3,21 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function(){
-    beforeEach(module('KiteMail.controllers'));
+    beforeEach(
+    function() {
+        module('KiteMail.controllers');
+    });
 
     
     describe('MailsListController', function() {
-        it('should do an ajax request to query mails', inject(function($injector) {
-            var $httpBackend = $injector.get('$httpBackend');
-            $httpBackend.expectGET('/karim/mail', 200);
-
-            var $rootScope = $injector.get('$rootScope');
-            var ctrl = $injector.get("MailsListController", {$scope: $rootScope})
-            this.$httpBackend.flush();
+        it('should call Email.query service to query mails', inject(function($controller, $rootScope) {
+            var locals = {
+                $scope: $rootScope,
+                Emails: jasmine.createSpyObj('Emails', ['query']),
+            };
+            
+            var ctrl = $controller("MailsListController", locals)
+            expect(locals.Emails.query).toHaveBeenCalled();
         }));
 
         it('should ....', inject(function() {
