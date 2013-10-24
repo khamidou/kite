@@ -5,7 +5,7 @@
 angular.module('KiteMail.services', ['ngResource']).
 factory('Emails', ['$resource',
     function($resource) {
-        var data = $resource('/kite/:user/mail/', {}, {
+        var res = $resource('/kite/:user/mail/', {}, {
             query: {
                 method:'GET',
                 params:{user: "karim"},
@@ -23,7 +23,8 @@ factory('Emails', ['$resource',
                 
             },
        });
-
+        
+        return res;
     }
 ]);
 
