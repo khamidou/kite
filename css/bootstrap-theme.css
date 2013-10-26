@@ -1,20 +1,20 @@
 body {
-    padding-top: 20px;
     padding-bottom: 40px;
 }
 
 /* Custom container */
 .container-narrow {
-margin: 0 auto;
-        max-width: 800px;
+    margin: 0 auto;
+    max-width: 800px;
 }
 .container-narrow > hr {
-margin: 30px 0;
+    margin: 30px 0;
 }
 
 .parent {
-    background: linear-gradient(45deg, rgb(2, 0, 49) 0%, rgb(109, 51, 83) 100%) repeat scroll 0% 0% transparent;
+    background: none;
 }
+
 /* Main marketing message and sign up button */
 .jumbotron {
     text-align: center;
@@ -26,7 +26,7 @@ margin: 30px 0;
 
 .jumbotron .btn {
     font-size: 21px;
-padding: 14px 24px;
+    padding: 14px 24px;
 }
 
 /* Supporting marketing content */
@@ -36,4 +36,33 @@ padding: 14px 24px;
 
 .marketing p + h4 {
     margin-top: 28px;
+}
+
+.topDecoration {
+    background-color: black;
+    width: 100%;
+    height: 5px;
+    background-image: url('../img/mail_border.png');
+}
+
+/* duplicated from the app code */ 
+button.btn {
+    border-radius: 3px;
+}
+
+a.btn.btn-primary  {
+    background-image: linear-gradient(to bottom, #889ED3, #4162AF);
+    background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: none;
+  background-position: none;
+  background-image: linear-gradient(to bottom, #A6B7DE, #889ED3);
+  background-image: -webkit-linear-gradient(top, #A6B7DE, #889ED3);
 }
