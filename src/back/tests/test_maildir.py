@@ -20,19 +20,26 @@ class MockMailItem(object):
             return (mockdata[hd], "Nulltuple")
     
 class MockMailDir(object):
+    def __init__(self):
+        self.mi = MockMailItem()
     def iteritems(self):
+        return [("randomId", self.mi)]
+
+    def get(self, id):
+        if id == "randomId":
+            return self.mi
+
+class TestMailDir(unittest.TestCase):
+    def test_extract_email(self):
         mi = MockMailItem()
-        return [("randomId", mi)]
-
-
-class TestMaildir(unittest.TestCase):
-    def test_get_mails(self):
+        self.assertEqual(kite.maildir.extract_email(mi), mockdata)
+          
+    def test_get_emails(self):
         md = MockMailDir()
-        parsedMaildir = kite.maildir.get_mails(md)
+        parsedMaildir = kite.maildir.get_emails(md)
         self.assertEqual(len(parsedMaildir), 1)
 
-        firstEmail = parsedMaildir[0]
-        self.assertEqual(firstEmail["id"], 0)
-
-        del firstEmail["id"] 
-        self.assertEqual(firstEmail, mockdata)
+    def test_get_email(self):
+        md = MockMailDir()
+        parsedEmail = kite.maildir.get_email(md, "randomId")
+        self.assertEqual(parsedEmail, mockdata)
