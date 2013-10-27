@@ -2,11 +2,18 @@ body {
     padding-bottom: 40px;
 }
 
+body a {
+    color: rgb(65, 98, 175);
+}
+
 /* Custom container */
 .container-narrow {
     margin: 0 auto;
     max-width: 800px;
+    font-size: 1.3em;
+    line-height: 1.6875;
 }
+
 .container-narrow > hr {
     margin: 30px 0;
 }
@@ -31,11 +38,20 @@ body {
 
 /* Supporting marketing content */
 .marketing {
-    margin: 60px 0;
+    margin: 10px 0;
 }
 
 .marketing p + h4 {
     margin-top: 28px;
+}
+
+.anchor {
+    color: rgb(51, 51, 51);
+}
+
+.anchor:hover {
+    color: rgb(51, 51, 51);
+    text-decoration: none;
 }
 
 .topDecoration {
@@ -55,6 +71,11 @@ a.btn.btn-primary  {
     background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
 }
 
+a.btn.btn-primary:hover  {
+    background-color: none;
+    background-position: none;
+}
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
@@ -65,4 +86,9 @@ a.btn.btn-primary  {
   background-position: none;
   background-image: linear-gradient(to bottom, #A6B7DE, #889ED3);
   background-image: -webkit-linear-gradient(top, #A6B7DE, #889ED3);
+}
+
+a .btn:hover, a .btn:focus {
+    background-position: none;
+    transition: none;
 }
