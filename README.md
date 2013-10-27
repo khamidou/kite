@@ -9,6 +9,7 @@ This is very much alpha software, but I hope to have something usable in a coupl
 
 To run it, you'll need to have [vagrant](http://www.vagrantup.com/) installed.
 When it's done, run the following commands :
+
     vagrant up
     vagrant ssh
     sudo -s -u kite
