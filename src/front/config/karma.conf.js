@@ -10,6 +10,8 @@ module.exports = function(config){
       'test/unit/**/*.js'
     ],
 
+    exclude: ['app/lib/angular/angular-loader*.js'],
+
     autoWatch : true,
 
     frameworks: ['jasmine'],
