@@ -1,0 +1,39 @@
+<div class="mailboxPage">
+    <!-- Static navbar -->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner topbar">
+            <div class="container-fluid navbar-header"></div>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <a class="brand" href="#">Kite</a>
+                    <div class="nav-collapse collapse">
+                        <p class="navbar-text pull-right">
+                            <a href="#" class="navbar-link">user@example.com</a>
+                        </p>
+                    </div><!--/.nav-collapse -->
+                    <div class="searchBox span5 offset2">
+                        <input type="text"></input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div id="sidebar" class="span3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list inbox-list" ng-controller="InboxesListController">
+                        <li>
+                            <button type="button" class="btn btn-primary btn-compose">Compose</button>
+                        </li>
+                        <li ng-repeat="inbox in inboxes">{{inbox.name}}</li>
+                    </ul>
+                </div>    
+            </div>
+
+            <div class="span9" ng-transclude>
+
+            </div> <!-- span9 -->
+        </div> <!-- row-fluid -->
+</div>

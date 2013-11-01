@@ -1,0 +1,35 @@
+<div base-layout>
+    <div class="row-fluid buttonsRow">
+        <div class="span4">
+            <button class="btn">Select</button>
+            <button class="btn">Reload</button>
+            <button class="btn">More</button>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <table class="table" ng-controller="MailsListController">
+            <tr>
+                <th>Sender</th>
+                <th>Content</th>
+                <th>Date</th>
+            </tr>
+            <tr ng-repeat="mail in mails | orderBy:'-date':reverse ">
+                    <td>
+                        <span ng-show="mail.name">
+                            {{mail.name}} ({{mail.from}})
+                        </span>
+                        <span ng-hide="mail.name">
+                            {{ mail.from }}
+                        </span>
+                    </td>
+                    <td>
+                        <a ng-href="#/thread/{{mail.id}}">
+                            <b>{{mail.subject}}</b> {{mail.contents | truncate}}
+                        </a>    
+                    </td>
+                    <td>{{mail.date|formatDate}}</td>
+                </a>
+            </tr>
+        </table>
+    </div> <!-- row-fluid -->
+</div>

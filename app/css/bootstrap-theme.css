@@ -1,0 +1,131 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+.sidebar-nav {
+    padding: 9px 0;
+    box-shadow: none;
+    border-radius: 3px;
+}
+
+@media (max-width: 980px) {
+    /* Enable use of floated navbar text */
+    .navbar-text.pull-right {
+       float: none;
+       padding-left: 5px;
+       padding-right: 5px;
+    }
+}
+
+.loginPage .loginContainer {
+    width: 340px;
+}
+
+.loginPage .loginContainer .header {
+    background-image: url('../img/mail_border.png');
+    border: 1px solid black;
+    height: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+}
+
+.loginPage .loginContainer .loginForm {
+    border: 1px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+}
+
+button.btn {
+    border-radius: 3px;
+}
+
+button.btn.btn-primary  {
+    background-image: linear-gradient(to bottom, #889ED3, #4162AF);
+    background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: none;
+  background-position: none;
+  background-image: linear-gradient(to bottom, #A6B7DE, #889ED3);
+  background-image: -webkit-linear-gradient(top, #A6B7DE, #889ED3);
+}
+
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+    background-color: #FDFED7;
+    border-color: none;
+    -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+
+}
+
+.btn-compose {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+ul.inbox-list {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+ul.inbox-list li {
+    line-height: 18px;
+}
+
+.navbar-header {
+    background-image: url('../img/mail_border.png');
+    height: 3px;
+}
+
+.navbar-inner.topbar {
+    background: #F2F2F2;
+    box-shadow: none;
+}
+
+.buttonsRow {
+    padding-bottom: 5px;
+}
+
+.searchBox input {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.subjectLine {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.recipients {
+    color: #888;
+}
+
+.emailContents {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
