@@ -13,11 +13,11 @@ describe('controllers', function(){
         it('should call Email.query service to query mails', inject(function($controller, $rootScope) {
             var locals = {
                 $scope: $rootScope,
-                Emails: jasmine.createSpyObj('Emails', ['query']),
+                Emails: jasmine.createSpyObj('Emails', ['emails']),
             };
             
             var ctrl = $controller("MailsListController", locals)
-            expect(locals.Emails.query).toHaveBeenCalled();
+            expect(locals.Emails.emails).toHaveBeenCalled();
         }));
 
         it('should ....', inject(function() {

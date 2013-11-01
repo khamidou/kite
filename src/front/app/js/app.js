@@ -6,6 +6,6 @@ angular.module('KiteMail', ['KiteMail.filters', 'KiteMail.services', 'KiteMail.d
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/mail', {templateUrl: 'partials/mailbox.html', controller: 'InboxesListController'});
     $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'LoginController'});
-    $routeProvider.when('/thread', {templateUrl: 'partials/thread.html', controller: 'ThreadController'});
+    $routeProvider.when('/thread/:id', {templateUrl: 'partials/thread.html', controller: 'ThreadController'});
     $routeProvider.otherwise({redirectTo: '/login'});
   }]);

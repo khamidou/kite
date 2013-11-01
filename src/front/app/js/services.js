@@ -5,10 +5,10 @@
 angular.module('KiteMail.services', ['ngResource']).
 factory('Emails', ['$resource',
     function($resource) {
-        var res = $resource('/kite/:user/mail/', {}, {
-            query: {
+        var res = $resource('/kite/:username/mail/', {}, {
+            emails: {
                 method:'GET',
-                params:{user: "karim"},
+                params:{username: "@username"},
                 isArray:true,
                 transformResponse: function(data) {
                     var data = angular.fromJson(data);

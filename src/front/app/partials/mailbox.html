@@ -14,16 +14,21 @@
                 <th>Date</th>
             </tr>
             <tr ng-repeat="mail in mails | orderBy:'-date':reverse ">
-                <td>
-                    <span ng-show="mail.name">
-                        {{mail.name}} ({{mail.from}})
-                    </span>
-                    <span ng-hide="mail.name">
-                        {{ mail.from }}
-                    </span>
-                </td>
-                <td><b>{{mail.subject}}</b> {{mail.contents | truncate}}</td>
-                <td>{{mail.date|formatDate}}</td>
+                    <td>
+                        <span ng-show="mail.name">
+                            {{mail.name}} ({{mail.from}})
+                        </span>
+                        <span ng-hide="mail.name">
+                            {{ mail.from }}
+                        </span>
+                    </td>
+                    <td>
+                        <a ng-href="#/thread/{{mail.id}}">
+                            <b>{{mail.subject}}</b> {{mail.contents | truncate}}
+                        </a>    
+                    </td>
+                    <td>{{mail.date|formatDate}}</td>
+                </a>
             </tr>
         </table>
     </div> <!-- row-fluid -->
