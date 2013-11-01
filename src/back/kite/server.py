@@ -13,6 +13,6 @@ def index(user):
 def index(user, id):
             response.content_type = "application/json"
             mdir = read_mail("/home/kite/Maildir")
-            return json.dumps(get_email(mdir, id))
+            return json.dumps([get_email(mdir, id)])
 
 bottle.run(host='localhost', port='8080')

@@ -115,3 +115,17 @@ ul.inbox-list li {
     margin-top: 10px;
     margin-left: 30px;
 }
+
+.subjectLine {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.recipients {
+    color: #888;
+}
+
+.emailContents {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}

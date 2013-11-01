@@ -5,21 +5,30 @@
 angular.module('KiteMail.services', ['ngResource']).
 factory('Emails', ['$resource',
     function($resource) {
-        var res = $resource('/kite/:username/mail/', {}, {
-            emails: {
+        var processThread = function(data) {
+            var data = angular.fromJson(data);
+
+            // convert date string to js date objects
+            for(var i = 0; i < data.length; i++) {
+                data[i]["date"] = new Date(data[i]["date"]);
+            }
+
+            return data;
+        }
+
+        var res = $resource('/kite/:username/mail/:id', {}, {
+            threads: {
                 method:'GET',
                 params:{username: "@username"},
                 isArray:true,
-                transformResponse: function(data) {
-                    var data = angular.fromJson(data);
+                transformResponse: processThread,
+            },
 
-                    // convert date string to js date objects
-                    for(var i = 0; i < data.length; i++) {
-                        data[i]["date"] = new Date(data[i]["date"]);
-                    }
-
-                    return data;
-                },
+            thread: {
+                method:'GET',
+                params:{username: "@username", id: "@id"},
+                isArray: true,
+                transformResponse: processThread, 
             },
        });
         

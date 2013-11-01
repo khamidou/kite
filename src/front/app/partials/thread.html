@@ -9,14 +9,32 @@
     <div class="row-fluid">
             <div ng-repeat="mail in thread | orderBy:'date'">
                     <!-- FIXME: make a directive of this -->
-                    <span ng-show="mail.name">
-                        {{mail.name}} ({{mail.from}})
-                    </span>
-                    <span ng-hide="mail.name">
-                        {{ mail.from }}
-                    </span>
-                    <div>{{mail.subject}}</div>
-                    <div>{{mail.date|formatDate}}</div>
+                    <div class="row-fluid subjectLine">
+                        <h4>{{mail.subject}}</h4>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <span ng-show="mail.name">
+                                {{mail.name}} ({{mail.from}})
+                            </span>
+                            <span ng-hide="mail.name">
+                                {{ mail.from }}
+                            </span>
+                        </div>
+                        <div class="span2 offset6">
+                            <div>{{mail.date|formatDate}}</div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8 recipients">
+                            To: {{mail.to}}
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="emailContents">
+                            {{mail.contents}}
+                        </div>
+                    </div>
             </div>
         </table>
     </div> <!-- row-fluid -->

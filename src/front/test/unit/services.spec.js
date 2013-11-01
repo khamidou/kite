@@ -19,7 +19,7 @@ describe('Emails service', function() {
         ];
 
         $httpBackend.expectGET('/kite/test/mail').respond(mockResponse);
-        var result = Emails.emails({username: "test"});
+        var result = Emails.threads({username: "test"});
         $httpBackend.flush();
         var date = result[0]["date"];
         expect(date instanceof Date).toBe(true);
