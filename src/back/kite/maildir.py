@@ -10,6 +10,7 @@ def extract_email(msg):
     msg_obj["from"] = msg.getheaders('From')[0]
     msg_obj["to"] = msg.getheaders('To')[0]
     msg_obj["subject"] = msg.getheaders('Subject')[0]
+    msg_obj["date"] = msg.getheaders('Date')[0]
     msg_obj["contents"] = msg.fp.read()
     return msg_obj
 

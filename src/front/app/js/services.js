@@ -13,6 +13,7 @@ factory('Emails', ['$resource',
                 transformResponse: function(data) {
                     var data = angular.fromJson(data);
 
+                    debugger;
                     // convert date string to js date objects
                     for(var i = 0; i < data.length; i++) {
                         data[i]["date"] = new Date(data[i]["date"]);

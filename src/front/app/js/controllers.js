@@ -10,7 +10,7 @@ angular.module('KiteMail.controllers', []).
             {"name": "Spam",  },];
             
 }).controller('MailsListController', ['$scope', 'Emails', function($scope, Emails) {
-        $scope.mails = Emails.emails();
+        $scope.mails = Emails.emails({username: "karim"});
 }]).controller('LoginController', function($scope) {
     
     
