@@ -51,18 +51,15 @@
 
             <div class="row-fluid marketing">
                 <div class="span12">
-                    <h3>Based on the interface we all know and love</h3>
-                    <p>Google got a lot of things right when they designed gmail. 
-                        That's why I set out to clone most of the features on gmail in Kite.
-                    </p>
-                    <p>As of now, Kite is a very very basic email client. Sending doesn't work yet. I hope to add features likes filters, search and the rest soon.
-                    </p>
+                    <h3>What is it?</h3>
+                    <p>Kite is basically a gmail clone. It's BSD-licensed and you can installed on your own server.</p>
+                    <p>It's alpha software, but I hope to flesh it out in the next few months.</p>
                 </div>
             </div>
             <div class="row-fluid marketing">
                 <div class="span12">
                     <a id="screenshots" class="anchor">
-                        <h3>Screenshots (click to enlarge)</h3>
+                        <h3>What does it look like? (click to enlarge)</h3>
                     </a>
                     
                     <p>
@@ -74,16 +71,45 @@
                         Clicking in on a conversation opens the conversation view :
                     </p> 
                     <a href="img/kite_thread.png"><img src="img/kite_thread_thumb.png" /></a>
+
+                    <p>
+                        This is your standard login window :
+                    </p> 
+                    <a href="img/login.png"><img src="img/login_thumb.png" /></a>
+
                 </div>
                 <div class="row-fluid">
-                    <div class="span6">
+                    <div class="span12">
+                        <a id="screenshots" class="anchor">
+                            <h3>Why?</h3>
+                        </a>
+     
+                        <p>
+                            I really like gmail. I use it a <i>lot</i>. Google got a lot of things right when they designed it. 
+                            However I'd like to be in control of my data, and to host it in on my own server.
+                        </p>
+
+                        <p>
+                            A few months ago I decided to set up my own mail server so I started shopping around for potential solutions. 
+                            A lot of the components that make an email server already work : Postfix for email handling, 
+                            Dovecot for IMAP, Spamassassin for SPAM and ElasticSearch for searching. 
+                       </p>
+                       <p>
+                           Unfortunately, I didn't find a webmail that would cut it, so I decided to write my own. 
+                           After a few months of coding, kite was born!
+                       </p>
+                        <p>
+                        Kite is still very much alpha software : it can only display individual messages. I hope to get something a lot more useable in the next few months, though. I'll start with threading, gmail-style, and the old school compose.
+                        </p>
+
+
                     </div>
 
                 </div>
             </div>
             <div class="row-fluid marketing">
                 <div class="span12">
-                    <h3>(Almost) One-click deployment</h3>
+                    <h3>Will it be easy to install?</h3>
                     <p>
                         Kite uses puppet for deployments. This means that deploying a new mail server, including a postfix config with sensible defaults, can be done in seconds ! 
                     </p>
@@ -92,27 +118,16 @@
 
             <div class="row-fluid marketing">
                 <div class="span12">
-                    <h3>Built on standards</h3>
+                    <h3>How can I contribute?</h3>
                     <p>
-                        Kite uses proven opensource tools such as Postfix, Puppet and ElasticSearch.
+                        The code and the issues are hosted on github. 
+                        You can also shoot me an email at kite~khamidou.com (replace ~ with @) for suggestions or improvements. 
                     </p>
-                </div>
-            </div>
-
-            <div class="row-fluid marketing">
-                <div class="span12">
-                    <h3>Get the code</h3>
                     <p>
-                        The code is hosted on <a href="http://github.com/khamidou/kite">Github</a>.
                         The frontend is written in Javascript with AngularJS, and the backend is in python2.
                     </p>
-                </div>
-            </div>
-            <div class="row-fluid marketing">
-                <div class="span10">
-                    <a id="contact" class="anchor"><h3>Contact</h3></a>
                     <p>
-                        If you'd like to get involved, send me an email at : contact@khamidou.com
+                        I use Jasmine and unittest.py for the tests.
                     </p>
                 </div>
             </div>
