@@ -5,6 +5,8 @@ It's written in Javascript with Angularjs for the frontend, and in Python 2 for 
 
 This is very much alpha software, but I hope to have something usable in a couple months.
 
+You can see a demo [here](http://khamidou.github.io/app)
+
 ### How to run it
 
 To run it, you'll need to have [vagrant](http://www.vagrantup.com/) installed.
