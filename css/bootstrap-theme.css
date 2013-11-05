@@ -1,3 +1,5 @@
+@import url(bootstrap.css);
+
 body {
     padding-bottom: 40px;
 }
@@ -72,23 +74,16 @@ a.btn.btn-primary  {
 }
 
 a.btn.btn-primary:hover  {
+    background-position: 0 0;
+    background-image: -webkit-linear-gradient(top, #6A86C8, #4264B3);
+    background-image: -moz-linear-gradient(top, #6A86C8, #4264B3);
+    background-image: -o-linear-gradient(top, #6A86C8, #4264B3);
+    background-image: linear-gradient(top, #6A86C8, #4264B3);
+    transition: none;
+}
+
+#cta:hover, #cta:focus {
     background-color: none;
-    background-position: none;
-}
-
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-  background-color: none;
-  background-position: none;
-  background-image: linear-gradient(to bottom, #A6B7DE, #889ED3);
-  background-image: -webkit-linear-gradient(top, #A6B7DE, #889ED3);
-}
-
-a .btn:hover, a .btn:focus {
     background-position: none;
     transition: none;
 }
