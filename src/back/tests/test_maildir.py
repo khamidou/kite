@@ -2,7 +2,7 @@ import kite.maildir
 import unittest
 import types
 
-mockdata = {"from": "gerard", "subject": "test", "contents": "empty", "to": "gerard"}
+mockdata = {"from": "gerard", "subject": "test", "contents": "empty", "to": "gerard", "date": "November 13, 2007"}
 
 class EmptyObject(object):
     """Empty class used by mocks. Required because python doesn't let us add attributes
