@@ -15,4 +15,4 @@ def index(user, id):
             mdir = read_mail("/home/kite/Maildir")
             return json.dumps([get_email(mdir, id)])
 
-bottle.run(host='localhost', port='8080')
+bottle.run(host='localhost', port='8080', reloader=True)
