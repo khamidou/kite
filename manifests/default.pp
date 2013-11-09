@@ -1,33 +1,55 @@
+# this is the main config file for puppet
+
+$server_name = "kitebox.dev"
+
 exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }
 
-$packages = ["postfix", "python", "bpython"]
+$packages = ["python", "bpython"]
+
+$kite_gid = "5000"
+$kite_uid = "500"
 
 group { "kite":
-    ensure => "present"
+    ensure => "present",
+    gid => $kite_gid
 }
 
 package { $packages:
     ensure => present,
-    require => Exec["apt-get update"]
-}
-
-service {'postfix':
-    ensure => running,
-    enable => true,
-    hasstatus => true,
-    hasrestart => true,
-    require => Package["postfix"]
+    require => Exec["apt-get update"],
 }
 
 user { "kite":
     require => Group["kite"],
     ensure => present,
     gid => "kite",
+    uid => $kite_uid,
     shell => "/bin/true",
     home => "/home/kite",
     managehome => true,
+}
+
+# comes from http://serverfault.com/a/524188
+class hostname ($fqdn) {
+    file { "/etc/hostname":
+               ensure => present,
+               owner => root,
+               group => root,
+               mode => 644,
+               content => "$fqdn\n",
+               notify => Exec["set-hostname"],
+    }
+
+    exec { "set-hostname":
+        command => "/bin/hostname -F /etc/hostname",
+        unless => "/usr/bin/test `hostname` = `/bin/cat /etc/hostname`",
+    }
+}
+
+class {'hostname':
+    fqdn => $server_name
 }
 
 file { "/var/kitemail":
@@ -37,41 +59,18 @@ file { "/var/kitemail":
     group => "kite",
 }
 
-
 # nginx
 class {'nginx':
-    server_name => "example.com",
+    server_name => $server_name,
     appdir => "/home/kite/app",
     require => Exec["apt-get update"]
 }
 
-#nginx::resource::location {'kiteapp':
-#    ensure => present,
-#  www_root => '/home/kite/app',
-#    location => '/',
-#    vhost => 'kiteapp'
-#}
-
-# code comes from : https://bitbucket.org/daks/puppet-postfix/src/2e93e657cab6/manifests/definitions/config.pp
-define postfix_config ($ensure = present, $value, $nonstandard = false) {
-      exec {"postconf -e ${name}='${value}'":
-        path =>  ["/usr/bin/", "/usr/sbin"],
-        unless  => $nonstandard ? {
-          false => "test \"x$(postconf -h ${name})\" == 'x${value}'",
-          true  => "test \"x$(egrep '^${name} ' /etc/postfix/main.cf | cut -d= -f2 | cut -d' ' -f2)\" == 'x${value}'",
-        },
-        notify  => Service["postfix"],
-        require => Package["postfix"]
-      }
-}
-
-postfix_config { 'home_mailbox':
-    value => "Maildir/",
-}
-
-# deliver a copy of all the received emails to user kite
-postfix_config { 'always_bcc':
-    value => "kite",
+# postfix
+class {'postfix':
+    server_name => $server_name,
+    appdir => "/home/kite/app",
+    require => Exec["apt-get update"]
 }
 
 # deploy files
