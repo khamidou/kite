@@ -6,7 +6,7 @@ exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }
 
-$packages = ["python", "bpython"]
+$packages = ["python", "bpython", "sl"]
 
 $kite_gid = "5000"
 $kite_uid = "500"
@@ -50,6 +50,10 @@ class hostname ($fqdn) {
 
 class {'hostname':
     fqdn => $server_name
+}
+
+host {'kitebox.dev':
+    ip => '127.0.0.1'
 }
 
 file { "/var/kitemail":

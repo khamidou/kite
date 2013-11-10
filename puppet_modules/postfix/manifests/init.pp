@@ -32,12 +32,28 @@ class postfix ($server_name, $appdir) {
         value => "Maildir/",
     }
 
+    
     postfix_config { 'virtual_mailbox_domains':
         value => "/etc/postfix/vhosts",
     }
 
+   file {'/home/kite/Maildirs':
+        ensure => 'directory',
+        group => '5000',
+        owner => '500',
+    }
+
+    file {"/home/kite/Maildirs/${server_name}":
+        ensure => 'directory',
+        group => '5000',
+        owner => '500',
+        require => File['/home/kite/Maildirs'],
+    }
+
+
     postfix_config { 'virtual_mailbox_base':
-        value => "/home/kite",
+        value => "/home/kite/Maildirs/",
+        require => File['/home/kite/Maildirs'],
     }
 
     postfix_config { 'virtual_mailbox_maps' :
@@ -49,7 +65,7 @@ class postfix ($server_name, $appdir) {
     }
 
     postfix_config { 'virtual_uid_maps':
-        value => "static:5000",
+        value => "static:500",
     }
 
     postfix_config { 'virtual_gid_maps':
