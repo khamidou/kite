@@ -1,0 +1,67 @@
+base_dir = /var/run/dovecot/
+info_log_path = /var/log/dovecot.info
+log_path = /var/log/dovecot
+log_timestamp = "%Y-%m-%d %H:%M:%S "
+mail_location = maildir:/home/kite/Maildirs/%d/%n/
+disable_plaintext_auth = no
+
+protocols = imap pop3
+
+auth_mechanisms = plain cram-md5 # FIXME: setup SSL
+auth_verbose = yes
+auth_debug_passwords = yes
+
+service auth {
+    executable = /usr/lib/dovecot/auth
+    user = root
+
+    unix_listener /var/spool/postfix/private/auth-client {
+            # The client socket is generally safe to export to everyone. Typical use
+            # is to export it to your SMTP server so it can do SMTP AUTH lookups
+            # using it.
+            mode = 0660
+            user = postfix
+            group = postfix
+    }
+}
+
+service imap-login {
+    chroot = login
+    executable = /usr/lib/dovecot/imap-login
+    user = dovecot
+}
+
+service imap {
+    executable = /usr/lib/dovecot/imap
+}
+
+service pop3-login {
+    chroot = login
+    executable = /usr/lib/dovecot/pop3-login
+    user = dovecot
+}
+
+service pop3 {
+    executable = /usr/lib/dovecot/pop3
+}
+
+ssl = no
+
+valid_chroot_dirs = /var/spool/dovecot
+
+protocol pop3 {
+    pop3_uidl_format = %08Xu%08Xv
+}
+
+passdb {
+    driver= passwd-file
+    args = /etc/dovecot/passwd
+}
+
+userdb {
+    driver= passwd-file
+    args = /etc/dovecot/users
+}
+
+
+

@@ -6,7 +6,7 @@ exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }
 
-$packages = ["python", "bpython", "sl"]
+$packages = ["python", "bpython", "sl", "mutt"]
 
 $kite_gid = "5000"
 $kite_uid = "500"
@@ -72,6 +72,12 @@ class {'nginx':
 
 # postfix
 class {'postfix':
+    server_name => $server_name,
+    appdir => "/home/kite/app",
+    require => Exec["apt-get update"]
+}
+
+class {'dovecot':
     server_name => $server_name,
     appdir => "/home/kite/app",
     require => Exec["apt-get update"]
