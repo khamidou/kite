@@ -6,7 +6,7 @@ exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }
 
-$packages = ["python", "bpython", "sl", "mutt"]
+$packages = ["python", "bpython", "mutt", "python-pyinotify"]
 
 $kite_gid = "5000"
 $kite_uid = "500"
