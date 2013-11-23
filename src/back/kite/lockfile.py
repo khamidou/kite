@@ -4,7 +4,7 @@ class LockingException(Exception):
     pass
 
 class FileLock(object):
-    def __init__(self, name, mode="r+w"):
+    def __init__(self, name, mode="rw+"):
         self.name = name
         self.fd = open(name, mode)
 
