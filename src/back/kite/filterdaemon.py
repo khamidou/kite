@@ -3,6 +3,8 @@
 #
 import sys
 import pyinotify
+import threads
+from jsonfile import JsonFile
 
 wm = pyinotify.WatchManager()  # Watch Manager
 mask = pyinotify.IN_DELETE | pyinotify.IN_CREATE  # watched events
@@ -14,9 +16,16 @@ class EventHandler(pyinotify.ProcessEvent):
     def process_IN_DELETE(self, event):
         print "Removing:", event.pathname
 
-handler = EventHandler()
-notifier = pyinotify.Notifier(wm, handler)
-wdd = wm.add_watch(sys.argv[1], mask, rec=True)
-print "Watching %s" % sys.argv[1]
+def init(path):
+    handler = EventHandler()
+    notifier = pyinotify.Notifier(wm, handler)
+    wdd = wm.add_watch(path, mask, rec=True)
+    threads_index = JsonFile(os.path.join(path, "threads_index.json"))
+    if threads_index.data == None:
+        threads_index.data = {}
 
-notifier.loop()
+
+    notifier.loop()
+
+if __name__ == "__main__":
+    init(sys.argv[1])
