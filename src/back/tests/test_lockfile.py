@@ -3,14 +3,13 @@ from kite.lockfile import FileLock
 import unittest
 import tempfile
 import fcntl
+import tmpdir
 
-class TestLockfile(unittest.TestCase):
+class TestLockfile(tmpdir.TestCaseWithTempFile):
     def test_lock(self):
-        fd, path = tempfile.mkstemp()
-        print "PATH ", path
-        with FileLock(path, "r+w"):
+        with FileLock(self.tmpfile, "r+w"):
             try:
-                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB) 
+                fcntl.flock(self.tmpfd, fcntl.LOCK_EX | fcntl.LOCK_NB) 
                 assert False, "Flock should have failed"
             except IOError:
                 pass
