@@ -72,6 +72,22 @@ class DumperThread(threading.Thread):
             print "Dumping threads index"
             threads_index.save()
             
+def process_new_email(path):
+    global threads_index
+
+    with open(path, "r") as fd:
+        parser = email.parser.HeaderParser()
+        email_headers = parser.parse(fd)
+        subject = email_headers.get("Subject")
+
+        if subject != None:
+            subject = headers.cleanup_subject(subject)
+            if subject in threads_index.data:
+                threads_index.data[subject].append(path)
+            else:
+                # create a new thread
+                threads_index.data[subject] = [path]
+
 
 class ProcessorThread(threading.Thread):
     def __init__(self, path):
@@ -89,21 +105,9 @@ class ProcessorThread(threading.Thread):
                 event = events_queue.pop(0)
                 if event["type"] == "create":
                     try:
-                        print event["path"]
-                        with open(event["path"], "r") as fd:
-                            parser = email.parser.HeaderParser()
-                            email_headers = parser.parse(fd)
-                            subject = email_headers.get("Subject")
-                            print "Subject: %s" % subject
-
-                            if subject != None:
-                                subject = headers.cleanup_subject(subject)
-                                if subject in threads_index.data:
-                                    threads_index.data[subject].append(event["path"])
-                                else:
-                                    threads_index.data[subject] = [event["path"]]
+                        self.process_new_email(event["path"])
                     except IOError:
-                        # Postfix/Dovecot creates temporary files. Ignore them
+                        # This may be a Postfix/Dovecot temporary file. Ignore it.
                         pass
                     
             time.sleep(EVENTS_QUEUE_PROCESSING_DELAY)
