@@ -72,9 +72,7 @@ class DumperThread(threading.Thread):
             print "Dumping threads index"
             threads_index.save()
             
-def process_new_email(path):
-    global threads_index
-
+def process_new_email(path, threads_index):
     with open(path, "r") as fd:
         parser = email.parser.HeaderParser()
         email_headers = parser.parse(fd)
@@ -82,11 +80,11 @@ def process_new_email(path):
 
         if subject != None:
             subject = headers.cleanup_subject(subject)
-            if subject in threads_index.data:
-                threads_index.data[subject].append(path)
+            if subject in threads_index["data"]:
+                threads_index["data"][subject].append(path)
             else:
                 # create a new thread
-                threads_index.data[subject] = [path]
+                threads_index["data"][subject] = [path]
 
 
 class ProcessorThread(threading.Thread):
@@ -94,10 +92,9 @@ class ProcessorThread(threading.Thread):
         threading.Thread.__init__(self)
         self.path = path
 
-        global threads_index
-        threads_index = JsonFile(os.path.join(self.path, "threads_index.json"))
-        if threads_index.data == None:
-            threads_index.data = {}
+        self.threads_index = JsonFile(os.path.join(self.path, "threads_index.json"))
+        if self.threads_index.data == None:
+            self.threads_index.data = {}
 
     def run(self):
         while True:
@@ -105,7 +102,7 @@ class ProcessorThread(threading.Thread):
                 event = events_queue.pop(0)
                 if event["type"] == "create":
                     try:
-                        self.process_new_email(event["path"])
+                        self.process_new_email(event["path"], self.threads_index)
                     except IOError:
                         # This may be a Postfix/Dovecot temporary file. Ignore it.
                         pass
