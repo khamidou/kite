@@ -12,6 +12,8 @@
 #
 # Because building a list of the emails in a thread at each server request would 
 # be madness.
+#
+# FIXME: support multiple users
 
 
 import sys
@@ -34,9 +36,6 @@ from jsonfile import JsonFile
 #
 # Finally, there's a thread which periodically dumps the thread index.
 events_queue = []
-
-# the email thread index - this is a dictionary pointing to the threads filenames
-threads_index = None
 
 DUMPER_SLEEP_DURATION=20
 EVENTS_QUEUE_PROCESSING_DELAY=10
@@ -62,15 +61,16 @@ class WatcherThread(threading.Thread):
         notifier.loop()
 
 class DumperThread(threading.Thread):
-    def __init__(self, path):
+    def __init__(self, path, threads_index):
         threading.Thread.__init__(self)
         self.path = path
+        self.threads_index = threads_index
 
     def run(self):
         while True:
             time.sleep(DUMPER_SLEEP_DURATION)
             print "Dumping threads index"
-            threads_index.save()
+            self.threads_index.save()
             
 def process_new_email(path, threads_index):
     with open(path, "r") as fd:
@@ -80,29 +80,26 @@ def process_new_email(path, threads_index):
 
         if subject != None:
             subject = headers.cleanup_subject(subject)
-            if subject in threads_index["data"]:
-                threads_index["data"][subject].append(path)
+            if subject in threads_index.data:
+                threads_index.data[subject].append(path)
             else:
                 # create a new thread
-                threads_index["data"][subject] = [path]
+                threads_index.data[subject] = [path]
 
 
 class ProcessorThread(threading.Thread):
-    def __init__(self, path):
+    def __init__(self, path, threads_index):
         threading.Thread.__init__(self)
         self.path = path
 
-        self.threads_index = JsonFile(os.path.join(self.path, "threads_index.json"))
-        if self.threads_index.data == None:
-            self.threads_index.data = {}
-
+        self.threads_index = threads_index
     def run(self):
         while True:
             while len(events_queue) != 0:
                 event = events_queue.pop(0)
                 if event["type"] == "create":
                     try:
-                        self.process_new_email(event["path"], self.threads_index)
+                        process_new_email(event["path"], self.threads_index)
                     except IOError:
                         # This may be a Postfix/Dovecot temporary file. Ignore it.
                         pass
@@ -111,9 +108,14 @@ class ProcessorThread(threading.Thread):
 
 
 if __name__ == "__main__":
-    processor_thread = ProcessorThread(sys.argv[1])
-    watcher_thread = WatcherThread(sys.argv[1])
-    dumper_thread = DumperThread(sys.argv[1])
+    path = sys.argv[1]
+    threads_index = JsonFile(os.path.join(path, "threads_index.json"))
+    if threads_index.data == None:
+            threads_index.data = {}
+
+    watcher_thread = WatcherThread(path)
+    processor_thread = ProcessorThread(path, threads_index)
+    dumper_thread = DumperThread(path, threads_index)
 
     processor_thread.start()
     watcher_thread.start()
