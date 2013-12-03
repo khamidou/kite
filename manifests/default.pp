@@ -83,6 +83,10 @@ class {'dovecot':
     require => Exec["apt-get update"]
 }
 
+class {'supervisord':
+    maildirs => '/home/kite/Maildirs'
+}
+
 # deploy files
 if $is_virtual == 'true' {
     file {'/home/kite/app':
