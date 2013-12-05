@@ -84,7 +84,9 @@ class {'dovecot':
 }
 
 class {'supervisord':
-    maildirs => '/home/kite/Maildirs'
+    maildirs => '/home/kite/Maildirs/kitebox.dev/testuser', #FIXME: revert to Maildirs when multiple users are supported
+    appdir => "/home/kite/app/back/kite/",
+    require => File["/home/kite/app"]
 }
 
 # deploy files

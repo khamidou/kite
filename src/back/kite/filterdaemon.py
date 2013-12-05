@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # filterdaemon.py 
 # This background process creates indexes files for threads and filters.
 #
@@ -109,6 +110,8 @@ class ProcessorThread(threading.Thread):
 
 if __name__ == "__main__":
     path = sys.argv[1]
+    print "Watching %s..." % path
+
     threads_index = JsonFile(os.path.join(path, "threads_index.json"))
     if threads_index.data == None:
             threads_index.data = {}

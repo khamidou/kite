@@ -1,6 +1,6 @@
 # a class for installing and configuring a basic nginx setup
 
-class supervisord ($maildirs) {
+class supervisord ($maildirs, $appdir) {
     $packages = ["supervisor"]
 
     package { $packages:
@@ -10,7 +10,7 @@ class supervisord ($maildirs) {
     file {"/etc/supervisord.conf":
         owner => "root",
         group => "root",
-        content => template('supervisord/supervisord.conf.erb')  
+        content => template('supervisord/supervisord.conf.erb'), 
     }
 
     service {'supervisor':
@@ -18,6 +18,6 @@ class supervisord ($maildirs) {
         enable => true,
         hasstatus => true,
         hasrestart => true,
-        require => Package["supervisor"]
+        require => [Package["supervisor"], File["/etc/supervisord.conf"]]
     }
 }
