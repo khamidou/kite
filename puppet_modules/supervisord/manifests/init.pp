@@ -5,12 +5,20 @@ class supervisord ($maildirs, $appdir) {
 
     package { $packages:
         ensure => present,
+        provider => 'pip',
     }
 
     file {"/etc/supervisord.conf":
-        owner => "root",
-        group => "root",
-        content => template('supervisord/supervisord.conf.erb'), 
+            owner => "root",
+            group => "root",
+            content => template('supervisord/supervisord.conf.erb'), 
+    }
+
+    file {"/etc/init.d/supervisor":
+            owner => "root",
+            group => "root",
+            mode => "0744",
+            content => template('supervisord/supervisord.init.erb'), 
     }
 
     service {'supervisor':
@@ -18,6 +26,9 @@ class supervisord ($maildirs, $appdir) {
         enable => true,
         hasstatus => true,
         hasrestart => true,
-        require => [Package["supervisor"], File["/etc/supervisord.conf"]]
+        path => "/etc/init.d/",
+        provider => 'init',
+        require => [Package["supervisor"], File["/etc/supervisord.conf"],
+                    File["/etc/supervisord.conf"]]
     }
 }
