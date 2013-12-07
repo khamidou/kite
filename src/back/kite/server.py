@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import bottle
 import json
 from bottle import route, template, response
