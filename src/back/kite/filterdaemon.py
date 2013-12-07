@@ -6,7 +6,6 @@
 # =======================
 #
 # An index file is a JSON list which holds the paths to files in a conversation.
-# The file name of an index file is of the form UUID4.json
 #
 # Why is it used ?
 # ================
@@ -21,6 +20,7 @@ import sys
 import os
 import pyinotify
 import threading
+import datetime
 import time
 import email.parser
 
@@ -71,6 +71,8 @@ class DumperThread(threading.Thread):
         while True:
             time.sleep(DUMPER_SLEEP_DURATION)
             print "Dumping threads index"
+            
+            # sort list by date
             self.threads_index.save()
             
 def process_new_email(path, threads_index):
@@ -81,11 +83,15 @@ def process_new_email(path, threads_index):
 
         if subject != None:
             subject = headers.cleanup_subject(subject)
-            if subject in threads_index.data:
-                threads_index.data[subject].append(path)
-            else:
+            thread = next((thread for thread in threads_index.data if thread.subject == subject), None)
+            if not thread:
                 # create a new thread
-                threads_index.data[subject] = [path]
+                thread = threads.create_thread_structure()
+                thread["subject"] = subject
+                threads_index.data.append(thread)
+
+            thread["messages"].append(path)
+            thread["date"] = datetime.datetime.utcnow()
 
 
 class ProcessorThread(threading.Thread):

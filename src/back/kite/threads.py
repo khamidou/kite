@@ -1,5 +1,6 @@
 # threads management functions
 import jsonfile
+import datetime
 import uuid
 import os
 
@@ -16,6 +17,8 @@ def create_thread(parent_dir):
 def load_thread(parent_dir, uuid):
     path = os.path.join(parent_dir, name)
 
+def create_thread_structure():
+    return {"date": datetime.datetime.utcnow(), "messages": [], "subject": ""}
 
     
 
