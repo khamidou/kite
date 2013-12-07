@@ -24,11 +24,16 @@ class supervisord ($maildirs, $appdir) {
     service {'supervisor':
         ensure => running,
         enable => true,
-        hasstatus => true,
-        hasrestart => true,
-        path => "/etc/init.d/",
         provider => 'init',
         require => [Package["supervisor"], File["/etc/supervisord.conf"],
-                    File["/etc/supervisord.conf"]]
+                    File["/etc/init.d/supervisor"]]
+    }
+
+    # FIXME: For some reason "service" doesn't setup supervisor to run at
+    # boot time, so we've got to call update rc.d manually.
+    exec {'update_rcd':
+        command => "update-rc.d supervisor defaults",
+        path => ["/usr/sbin", "/usr/bin/", "/sbin"],
+        require => [Service['supervisor']],
     }
 }
