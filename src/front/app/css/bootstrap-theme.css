@@ -37,13 +37,18 @@ body {
     padding: 10px;
 }
 
-button.btn {
-    border-radius: 3px;
-}
-
-button.btn.btn-primary  {
+.btn.btn-primary  {
     background-image: linear-gradient(to bottom, #889ED3, #4162AF);
     background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
+}
+
+.btn.btn-primary:hover  {
+    background-position: 0 0;
+    background-image: -webkit-linear-gradient(top, #6A86C8, #4264B3);
+    background-image: -moz-linear-gradient(top, #6A86C8, #4264B3);
+    background-image: -o-linear-gradient(top, #6A86C8, #4264B3);
+    background-image: linear-gradient(top, #6A86C8, #4264B3);
+    transition: none;
 }
 
 .btn-primary:hover,
