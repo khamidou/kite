@@ -6,8 +6,10 @@ exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }
 
-$packages = ["python", "python-pip", "python-dateutil", "bpython", 
+$packages = ["python", "python-pip", "bpython", 
              "mutt", "python-pyinotify", "mailutils"]
+
+$python_packages = ["python-dateutil"]
 
 $kite_gid = "5000"
 $kite_uid = "500"
@@ -20,6 +22,12 @@ group { "kite":
 package { $packages:
     ensure => present,
     require => Exec["apt-get update"],
+}
+
+package { $python_packages:
+    ensure => present,
+    require => Exec["apt-get update"],
+    provider => 'pip',
 }
 
 user { "kite":

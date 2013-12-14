@@ -83,7 +83,12 @@ def process_new_email(path, threads_index):
 
         if subject != None:
             subject = headers.cleanup_subject(subject)
-            thread = next((thread for thread in threads_index.data if thread.subject == subject), None)
+            thread = None
+            for thr in threads_index.data:
+                if thr["subject"] == subject:
+                    thread = thr
+                    break
+
             if not thread:
                 # create a new thread
                 thread = threads.create_thread_structure()
@@ -120,7 +125,7 @@ if __name__ == "__main__":
 
     threads_index = JsonFile(os.path.join(path, "threads_index.json"))
     if threads_index.data == None:
-            threads_index.data = {}
+            threads_index.data = [] 
 
     watcher_thread = WatcherThread(path)
     processor_thread = ProcessorThread(path, threads_index)

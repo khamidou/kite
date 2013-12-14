@@ -27,10 +27,12 @@ serverurl=unix:///tmp/supervisor.sock ; use a unix:// URL  for a unix socket
 command=<%= appdir %>/filterdaemon.py <%= maildirs %> ; the program (relative uses PATH, can take args)
 process_name=filterdaemon_sup ; process_name expr (default %(program_name)s)
 stdout_logfile=/tmp/filterdaemon.out        ; stdout log path, NONE for none; default AUTO
+redirect_stderr=true
 startretries=20
 
 [program:python_serv]
 command=<%= appdir %>server.py <%= maildirs %>
 process_name=kite_server
 stdout_logfile=/tmp/kiteserv.out
+redirect_stderr=true
 startretries=20

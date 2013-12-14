@@ -24,4 +24,5 @@ def get_emails(mdir):
 
 def get_email(mdir, id):
     msg = mdir.get(id)
+    print "ID: %s, %s", (id, msg)
     return extract_email(msg)

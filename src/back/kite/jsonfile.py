@@ -20,7 +20,6 @@ def deserialize_datetime(obj):
         pass
     return obj
 
- 
 class JsonFile(object):
     def __init__(self, path=None):
         self.path = path

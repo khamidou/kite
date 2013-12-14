@@ -2,24 +2,12 @@
 import jsonfile
 import datetime
 import uuid
+import base64
 import os
 
-def save_thread(parent_dir, name):
-    path = os.path.join(parent_dir, name)
-    jfile = jsonfile.JsonFile(path)
-    jfile.save()
-
-def create_thread(parent_dir):
-    name = str(uuid.uuid4()) + ".json"
-    save_thread(parent_dir, name)
-    return name
-
-def load_thread(parent_dir, uuid):
-    path = os.path.join(parent_dir, name)
-
-def create_thread_structure():
-    return {"date": datetime.datetime.utcnow(), "messages": [], "subject": ""}
-
+def generate_random_id():
+    # FIXME: maybe use better function ?
+    return base64.b32encode(os.urandom(32))
     
-
-
+def create_thread_structure():
+    return {"date": datetime.datetime.utcnow(), "messages": [], "subject": "", "id": generate_random_id()}
