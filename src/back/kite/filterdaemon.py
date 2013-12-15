@@ -84,19 +84,21 @@ def process_new_email(path, threads_index):
         if subject != None:
             subject = headers.cleanup_subject(subject)
             thread = None
-            for thr in threads_index.data:
+            for index, thr in enumerate(threads_index.data):
                 if thr["subject"] == subject:
-                    thread = thr
+                    thread = threads_index.data.pop(index)
                     break
 
             if not thread:
                 # create a new thread
                 thread = threads.create_thread_structure()
                 thread["subject"] = subject
-                threads_index.data.append(thread)
 
-            thread["messages"].append(path)
+            msg_id = os.path.basename(path)
+            thread["messages"].append(msg_id)
             thread["date"] = datetime.datetime.utcnow()
+            threads_index.data.insert(0, thread)
+
 
 
 class ProcessorThread(threading.Thread):

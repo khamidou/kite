@@ -2,6 +2,7 @@
 import bottle
 import json
 import jsonfile
+import sys
 from jsonfile import JsonFile
 from bottle import route, template, response, abort
 from maildir import *
@@ -25,15 +26,15 @@ def index(user, id):
                 if thr["id"] == id:
                     thread = thr
 
+            sys.stderr.write("thre % s" % json.dumps(thread, cls=jsonfile.DatetimeEncoder))
             if thread == None:
                 abort(404, "Thread not found.")
 
             response.content_type = "application/json"
 
             ret_json = []
-            mdir = read_mail("/home/kite/Maildir")
+            mdir = read_mail(sys.argv[1])
             for mail_id in thread["messages"]:
-                print "BOOYA %s\n!!" % mail_id
                 ret_json.append(get_email(mdir, mail_id)) 
 
             return json.dumps(ret_json)
