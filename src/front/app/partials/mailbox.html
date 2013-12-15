@@ -13,21 +13,24 @@
                 <th>Content</th>
                 <th>Date</th>
             </tr>
-            <tr ng-repeat="mail in mails | orderBy:'-date':reverse ">
+            <tr ng-repeat="thread in threads | orderBy:'-date':reverse ">
                     <td>
-                        <span ng-show="mail.name">
-                            {{mail.name}} ({{mail.from}})
+                        <span ng-show="thread.name">
+                            {{thread.name}} ({{thread.from}})
                         </span>
-                        <span ng-hide="mail.name">
-                            {{ mail.from }}
+                        <span ng-hide="thread.name">
+                            {{ thread.from }}
                         </span>
                     </td>
                     <td>
-                        <a ng-href="#/thread/{{mail.id}}">
-                            <b>{{mail.subject}}</b> {{mail.contents | truncate}}
+                        <a ng-href="#/thread/{{thread.id}}">
+                            <b>{{thread.subject}}</b>
+                            <!-- FIXME: {{mail.contents | truncate}} -->
                         </a>    
                     </td>
-                    <td>{{mail.date|formatDate}}</td>
+                    <td>
+                        {{thread.date|formatDate}}
+                    </td>
                 </a>
             </tr>
         </table>

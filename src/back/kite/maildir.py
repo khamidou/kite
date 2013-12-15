@@ -1,4 +1,6 @@
 import mailbox
+import email.utils
+import re
 
 def read_mail(path):
     mdir = mailbox.Maildir(path)
@@ -7,8 +9,12 @@ def read_mail(path):
 def extract_email(msg):
     """Extract all the interesting fields from an email"""
     msg_obj = {}
-    msg_obj["from"] = msg.getheaders('From')[0]
-    msg_obj["to"] = msg.getheaders('To')[0]
+    msg_obj["from"] = {}
+    from_field = msg.getheaders('From')[0]
+    msg_obj["from"]["name"], msg_obj["from"]["address"] = email.utils.parseaddr(from_field)
+    msg_obj["to"] = email.utils.getaddresses(msg.getheaders('To'))
+    
+
     msg_obj["subject"] = msg.getheaders('Subject')[0]
     msg_obj["date"] = msg.getheaders('Date')[0]
     msg_obj["contents"] = msg.fp.read()
@@ -24,5 +30,4 @@ def get_emails(mdir):
 
 def get_email(mdir, id):
     msg = mdir.get(id)
-    print "ID: %s, %s", (id, msg)
     return extract_email(msg)

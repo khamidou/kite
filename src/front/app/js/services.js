@@ -10,6 +10,7 @@ factory('Emails', ['$resource',
 
             // convert date string to js date objects
             for(var i = 0; i < data.length; i++) {
+                console.log(data[i]["date"]);
                 data[i]["date"] = new Date(data[i]["date"]);
             }
 
@@ -27,7 +28,7 @@ factory('Emails', ['$resource',
             thread: {
                 method:'GET',
                 params:{username: "@username", id: "@id"},
-                isArray: true,
+                isArray: false,
                 transformResponse: processThread, 
             },
        });

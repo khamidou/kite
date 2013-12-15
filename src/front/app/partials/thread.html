@@ -7,18 +7,19 @@
         </div>
     </div>
     <div class="row-fluid">
-            <div ng-repeat="mail in thread | orderBy:'date'">
-                    <!-- FIXME: make a directive of this -->
-                    <div class="row-fluid subjectLine">
-                        <h4>{{mail.subject}}</h4>
-                    </div>
-                    <div class="row-fluid">
+            <!-- FIXME: make a directive of this -->
+            <div class="row-fluid subjectLine">
+                <h4>{{thread.subject}}</h4>
+            </div>
+
+            <div ng-repeat="mail in thread.messages | orderBy:'date'">
+                   <div class="row-fluid">
                         <div class="span4">
-                            <span ng-show="mail.name">
-                                {{mail.name}} ({{mail.from}})
+                            <span ng-show="mail.from.name">
+                                {{mail.from.name}}
                             </span>
-                            <span ng-hide="mail.name">
-                                {{ mail.from }}
+                            <span ng-hide="mail.from.name">
+                                {{ mail.from.address }}
                             </span>
                         </div>
                         <div class="span2 offset6">
@@ -26,9 +27,20 @@
                         </div>
                     </div>
                     <div class="row-fluid">
-                        <div class="span8 recipients">
-                            To: {{mail.to}}
-                        </div>
+                        <span class="span8 recipients">
+                            To:
+                            <span ng-repeat="recipient in mail.to">
+                                <span ng-if="recipient[0] != ''">
+                                    {{ recipient[0] }}
+                                </span>
+                                <span ng-if="recipient[0] == ''">
+                                    {{ recipient[1] }}
+                                </span>
+                                <span ng-if="!$last">
+                                ,
+                                </span>
+                            </span>
+                        </span>
                     </div>
                     <div class="row-fluid">
                         <div class="emailContents">

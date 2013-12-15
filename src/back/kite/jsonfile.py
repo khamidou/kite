@@ -3,13 +3,15 @@
 import os
 import json
 import datetime
+import time
 import dateutil.parser
+import dateutil.tz
 from lockfile import FileLock
 
 class DatetimeEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
-            return obj.strftime("%y-%m-%dT%H:%M:%S+00:00")
+            return obj.isoformat()
 
         return json.JSONEncoder.default(self, obj)
 
@@ -52,3 +54,8 @@ class JsonFile(object):
         else:
             save_proper()
         
+def serialize_json(obj):
+    return json.dumps(obj, cls=DatetimeEncoder)
+
+def deserialize_json(string):
+    return json.loads(string, object_hook=deserialize_datetime)

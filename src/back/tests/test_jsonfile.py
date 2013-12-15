@@ -29,4 +29,3 @@ class TestJsonfile(tmpdir.TestCaseWithTempFile):
 
         json_file2 = JsonFile(self.tmpfile)
         self.assertTrue(isinstance(json_file2.data["date"], datetime.datetime), msg="Datetime value is not deserialized correctly")
-
