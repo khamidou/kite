@@ -10,15 +10,14 @@ You can see a demo [here](http://khamidou.github.io/kite/app).
 ### How to run it
 
 To run it, you'll need to have [vagrant](http://www.vagrantup.com/) installed.
-When it's done, run the following commands :
+When it's done, run:
 
     vagrant up
-    vagrant ssh
-    sudo -s -u kite
-    cd /home/kite
-    python app/back/kite/server.py 
 
 After this, browse to http://192.168.50.4 . You should be greeted by a login window. Use whatever username/password combination to login.
+
+The host name of the vagrant box is kitebox.dev. You should probably add it to
+your (host) machine /etc/hosts.
 
 ### Contact/Help
 
