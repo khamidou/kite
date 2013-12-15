@@ -3,7 +3,7 @@ import bottle
 import json
 import jsonfile
 import sys
-from jsonfile import JsonFile
+from jsonfile import JsonFile, serialize_json
 from bottle import route, template, response, abort
 from maildir import *
 
@@ -15,7 +15,7 @@ def index(user):
                 ret_threads.append(thread)
 
             response.content_type = "application/json"
-            return json.dumps(ret_threads, cls=jsonfile.DatetimeEncoder)
+            return serialize_json(ret_threads)
 
 @route('/kite/<user>/mail/<id>')
 def index(user, id):
@@ -32,11 +32,16 @@ def index(user, id):
 
             response.content_type = "application/json"
 
-            ret_json = []
+            ret_json = {"messages": [], 
+                        "subject": thread["subject"],
+                        "date": thread["date"], 
+                        "id": thread["id"]
+            }
+
             mdir = read_mail(sys.argv[1])
             for mail_id in thread["messages"]:
-                ret_json.append(get_email(mdir, mail_id)) 
+                ret_json["messages"].append(get_email(mdir, mail_id)) 
 
-            return json.dumps(ret_json)
+            return serialize_json(ret_json)
 
 bottle.run(host='localhost', port='8080', reloader=True)
