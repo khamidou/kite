@@ -3,6 +3,7 @@ Vagrant.configure("2") do |config|
     config.vm.box_url = "http://files.vagrantup.com/precise32.box"
     config.vm.provision :puppet do |puppet|
         puppet.module_path = "puppet_modules"
+        puppet.manifest = "vagrant.pp"
         #puppet.options = "--debug --verbose"
     end
     config.vm.host_name = "example.com"

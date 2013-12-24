@@ -61,10 +61,6 @@ class {'hostname':
     fqdn => $server_name
 }
 
-host {'kitebox.dev':
-    ip => '127.0.0.1'
-}
-
 file { "/var/kitemail":
     require => User["kite"],
     ensure => "directory",
@@ -96,15 +92,4 @@ class {'supervisord':
     maildirs => '/home/kite/Maildirs/kitebox.dev/testuser', #FIXME: revert to Maildirs when multiple users are supported
     appdir => "/home/kite/app/back/kite/",
     require => File["/home/kite/app"]
-}
-
-# deploy files
-if $is_virtual == 'true' {
-    file {'/home/kite/app':
-        ensure => 'link',
-        target => '/vagrant/src',
-        owner => 'kite',
-    }
-
-    # FIXME: copy/deploy files correctly if not running in vagrant
 }
