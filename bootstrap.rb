@@ -28,6 +28,16 @@ printf "Getting the sources from #{srcrepo} "
 `ssh root@#{hostname} bash -c "\
 apt-get update;\
 apt-get install -y git puppet;\
-git clone #{srcrepo} /root/kite;"`
+if [ ! -d /root/kite ]; then\
+    git clone #{srcrepo} /root/kite;\
+else\
+    cd /root/kite; git pull;\
+fi
+"`
 
+puts "OK"
+
+puts "Applying Puppet configuration "
+`ssh root@#{hostname} bash -c "\
+    puppet apply /root/kite/manifests/server.pp --modulepath=/root/kite/puppet_modules/\"`
 puts "OK"
