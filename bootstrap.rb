@@ -3,8 +3,7 @@
 #
 # This script goes through the following steps
 # - setup ssh key-based auth on server
-# - setup git and puppet
-# - clone the kite sources from github
+# - rsync the sources
 # - run puppet on the server
  
 if ARGV.length != 1 then
@@ -18,26 +17,24 @@ if !ENV["SSH_AGENT_PID"] then
     `ssh-add`
 end
 
-printf "Setting up public key auth on #{hostname} "
-`ssh-copy-id root@#{hostname}`
-puts "OK"
+def exec_command(command)
+    out = `#{command}`
+    if !$?.success? then
+        puts "FAIL.\n An error happened executing #{command}"
+        puts "Output: #{out}"
+    else
+        puts "OK."
+    end
+end
 
-srcrepo = "https://github.com/khamidou/kite.git"
-printf "Getting the sources from #{srcrepo} "
+printf "Setting up public key auth on #{hostname}: "
+exec_command("ssh-copy-id root@#{hostname}")
 
-`ssh root@#{hostname} bash -c "\
-apt-get update;\
-apt-get install -y git puppet;\
-if [ ! -d /root/kite ]; then\
-    git clone #{srcrepo} /root/kite;\
-else\
-    cd /root/kite; git pull;\
-fi
-"`
+printf "Setting up puppet: "
+exec_command("ssh root@#{hostname} bash -c \"apt-get update && apt-get install -y rsync puppet\"")
 
-puts "OK"
+printf "Copying the sources: "
+exec_command("rsync -a -f\"- .git/\" ../kite root@#{hostname}:/root/")
 
-puts "Applying Puppet configuration "
-`ssh root@#{hostname} bash -c "\
-    puppet apply /root/kite/manifests/server.pp --modulepath=/root/kite/puppet_modules/\"`
-puts "OK"
+puts "Applying Puppet configuration (this may take some time): "
+exec_command("ssh root@#{hostname} bash -c \"puppet apply /root/kite/manifests/server.pp --modulepath=/root/kite/puppet_modules/\"")

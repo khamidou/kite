@@ -1,6 +1,6 @@
 # a class for installing and configuring a basic nginx setup
 
-class sshd ($server_name) {
+class sshd {
     $packages = ["openssh-server"]
 
     package { $packages:
@@ -10,8 +10,8 @@ class sshd ($server_name) {
     file {"/etc/ssh/sshd_config":
         owner => "root",
         group => "root",
-        content => template('sshd/sshd_config.erb')  
-        notify => Service['ssh']
+        content => template('sshd/sshd_config.erb'),
+        notify => Service['ssh'],
     }
 
     service {'ssh':
@@ -19,6 +19,6 @@ class sshd ($server_name) {
         enable => true,
         hasstatus => true,
         hasrestart => true,
-        require => Package["openssh-server"]
+        require => Package["openssh-server"],
     }
 }

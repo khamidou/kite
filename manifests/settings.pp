@@ -1,1 +1,1 @@
-$server_name = "kitebox.dev"
+$server_name = "dogfood.kiteapp.io"
