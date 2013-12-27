@@ -9,7 +9,8 @@ from maildir import *
 
 @route('/kite/<user>/mail')
 def index(user):
-            threads_index = JsonFile("/home/kite/Maildirs/kitebox.dev/testuser/threads_index.json")
+            # FIXME: input sanitization
+            threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
             ret_threads = []
             for thread in threads_index.data[-50:]:
                 ret_threads.append(thread)
@@ -19,7 +20,7 @@ def index(user):
 
 @route('/kite/<user>/mail/<id>')
 def index(user, id):
-            threads_index = JsonFile("/home/kite/Maildirs/kitebox.dev/testuser/threads_index.json")
+            threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
             thread = None
 
             for thr in threads_index.data:
