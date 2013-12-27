@@ -3,21 +3,18 @@
 from fabric.api import *
 from fabric.contrib.project import rsync_project
 from fabric.contrib.files import upload_template
-import paramiko
-
-remote_user = "karim" # this needs to be a user who can run sudo
-
-paramiko.util.log_to_file("paramiko.log", 10)
-env.hosts = ["dogfood.kiteapp.io"]
+from setup_config import *
 
 PACKAGES = ('rsync', 'puppet')
 
 def setup():
-    local("ssh-copy-id %s@%s" % (remote_user, env.hosts[0]))
     sudo("apt-get update")
 
     for package in PACKAGES:
         sudo('apt-get -y install %s' % package)
 
     rsync_project("~", "../kite", exclude=[".git/", "*.swp", "*.pyc"])
-    sudo("puppet apply $HOME/kite/manifests/server.pp --modulepath=$HOME/kite/puppet_modules")
+    sudo("FACTER_user_home_dir=$HOME && export FACTER_user_home_dir && puppet apply $HOME/kite/manifests/server.pp --modulepath=$HOME/kite/puppet_modules")
+
+    local("ssh-copy-id %s@%s" % (env.user, env.hosts[0]))
+    sudo("puppet apply $HOME/kite/manifests/sshd.pp --modulepath=$HOME/kite/puppet_modules")

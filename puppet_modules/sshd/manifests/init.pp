@@ -1,7 +1,7 @@
 # a class for installing and configuring a basic nginx setup
 
 class sshd {
-    $packages = ["openssh-server"]
+    $packages = ["openssh-server", "fail2ban",]
 
     package { $packages:
         ensure => present,

@@ -5,11 +5,11 @@ import "default.pp"
 file {'/home/kite/app':
     ensure => 'directory',
     require => User['kite'],
-    source => "/root/kite/src",
+    source => "$user_home_dir/kite/src", # $user_home_dir is an env var exposed by facter
+                                         # it seems that there's no simpler solution. The env var
+                                         # is defined in the fabfile
     recurse => true,
     owner => 'kite',
 }
 
-class {'sshd':
 
-}

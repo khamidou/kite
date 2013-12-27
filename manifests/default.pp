@@ -6,7 +6,7 @@ exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }
 
-$packages = ["python", "python-pip", "bpython", "fail2ban",
+$packages = ["python", "python-pip", "bpython", 
              "mutt", "python-pyinotify", "mailutils"]
 
 $python_packages = ["python-dateutil"]
