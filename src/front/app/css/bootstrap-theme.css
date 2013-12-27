@@ -1,42 +1,9 @@
-body {
-    padding-top: 60px;
-    padding-bottom: 40px;
-}
-.sidebar-nav {
-    padding: 9px 0;
-    box-shadow: none;
-    border-radius: 3px;
-}
+/*
+ * Default Kite theme
+ */
 
-@media (max-width: 980px) {
-    /* Enable use of floated navbar text */
-    .navbar-text.pull-right {
-       float: none;
-       padding-left: 5px;
-       padding-right: 5px;
-    }
-}
-
-.loginPage .loginContainer {
-    width: 340px;
-}
-
-.loginPage .loginContainer .header {
-    background-image: url('../img/mail_border.png');
-    border: 1px solid black;
-    height: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-}
-
-.loginPage .loginContainer .loginForm {
-    border: 1px solid black;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 10px;
-}
-
+/* bootstrap style changes - scroll down for the kite-specific styles. 
+ * FIXME: maybe have cleaner overrides? */
 button.btn {
     border-radius: 3px;
 }
@@ -83,24 +50,50 @@ input[type="color"]:focus,
 
 }
 
-.btn-compose {
-    text-transform: uppercase;
-    margin-bottom: 10px;
+.sidebar-nav {
+    padding: 9px 0;
+    box-shadow: none;
+    border-radius: 3px;
 }
 
-ul.inbox-list {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-ul.inbox-list li {
-    line-height: 18px;
+@media (max-width: 980px) {
+    /* Enable use of floated navbar text */
+    .navbar-text.pull-right {
+       float: none;
+       padding-left: 5px;
+       padding-right: 5px;
+    }
 }
 
-.navbar-header {
+/* Kite specific styles */
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+}
+
+/* login page */
+.loginPage .loginContainer {
+    width: 340px;
+}
+
+.loginPage .loginContainer .header {
     background-image: url('../img/mail_border.png');
-    height: 3px;
+    border: 1px solid black;
+    height: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
 }
 
+.loginPage .loginContainer .loginForm {
+    border: 1px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+}
+
+/* topbar */
 .navbar-inner.topbar {
     background: #F2F2F2;
     box-shadow: none;
@@ -116,6 +109,40 @@ ul.inbox-list li {
     margin-left: 30px;
 }
 
+/* sidebar */
+#sidebar .well {
+    border: none;
+}
+
+.btn-compose {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+div.container-fluid.contentContainer {
+    padding-left: 0px;
+}
+
+ul.inbox-list {
+    padding-left: 0px;
+}
+
+ul.inbox-list li {
+    line-height: 18px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 15px;
+}
+
+ul.inbox-list li.currentInbox {
+    background-color: #babde6;
+}
+
+.unreadMailCount {
+    display: block;
+    float: right;
+}
+/* email */
 .subjectLine {
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
@@ -128,4 +155,6 @@ ul.inbox-list li {
 .emailContents {
     padding-bottom: 10px;
     border-bottom: 1px solid #ccc;
+    background-color: #fff;
 }
+

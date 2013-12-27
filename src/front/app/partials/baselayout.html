@@ -8,7 +8,7 @@
                     <a class="brand" href="#">Kite</a>
                     <div class="nav-collapse collapse">
                         <p class="navbar-text pull-right">
-                            <a href="#" class="navbar-link">user@example.com</a>
+                            <a href="#" class="navbar-link btn">Log out</a>
                         </p>
                     </div><!--/.nav-collapse -->
                     <div class="searchBox span5 offset2">
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid contentContainer">
         <div class="row-fluid">
             <div id="sidebar" class="span3">
                 <div class="well sidebar-nav">
@@ -27,6 +27,7 @@
                         <li>
                             <button type="button" class="btn btn-primary btn-compose">Compose</button>
                         </li>
+                        <li class="currentInbox">Inbox <span class=unreadMailCount">4</span></li>
                         <li ng-repeat="inbox in inboxes">{{inbox.name}}</li>
                     </ul>
                 </div>    
