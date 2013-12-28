@@ -9,5 +9,5 @@ class TestEmailProcessor(unittest.TestCase):
                 self.data = []
 
         threads_index = MockThreadsIndex()
-        filterdaemon.process_new_email("mocks/test_process_email.txt", threads_index)
+        filterdaemon.process_new_email("mocks/test_process_email.txt", threads_index.data)
         self.assertTrue("Hey, How are you ?" == threads_index.data[0]["subject"])

@@ -7,14 +7,6 @@
 #
 # An index file is a JSON list which holds the paths to files in a conversation.
 #
-# Why is it used ?
-# ================
-#
-# Because building a list of the emails in a thread at each server request would 
-# be madness.
-#
-# FIXME: support multiple users
-
 
 import sys
 import os
@@ -26,6 +18,7 @@ import email.parser
 
 import threads
 import headers
+import users
 from jsonfile import JsonFile
 
 # The architecture is pretty simple. This program is multithreaded.
@@ -43,37 +36,43 @@ EVENTS_QUEUE_PROCESSING_DELAY=10
 
 class WatcherThread(threading.Thread):
     class EventHandler(pyinotify.ProcessEvent):
+        def __init__(self, path):
+            self.path = path
+
         def process_IN_CREATE(self, event):
-            events_queue.append({"type": "create", "path": event.pathname})
+            if event.pathname != self.path: # inotify also logs events at the root of the folder, which we don't care about
+                events_queue.append({"type": "create", "path": event.pathname})
 
         def process_IN_DELETE(self, event):
-            events_queue.append({"type": "delete", "path": event.pathname})
+            if event.pathname != self.path:
+                events_queue.append({"type": "delete", "path": event.pathname})
 
     def __init__(self, path):
         threading.Thread.__init__(self)
-        self.path = path
+        self.path = os.path.realpath(path)
 
     def run(self):
         wm = pyinotify.WatchManager()
         mask = pyinotify.IN_DELETE | pyinotify.IN_CREATE
-        handler = WatcherThread.EventHandler()
+        handler = WatcherThread.EventHandler(self.path)
         notifier = pyinotify.Notifier(wm, handler)
         wdd = wm.add_watch(self.path, mask, rec=True)
         notifier.loop()
 
 class DumperThread(threading.Thread):
-    def __init__(self, path, threads_index):
+    def __init__(self, path, threads_index_cache):
         threading.Thread.__init__(self)
         self.path = path
-        self.threads_index = threads_index
+        self.threads_index_cache = threads_index_cache
 
     def run(self):
         while True:
             time.sleep(DUMPER_SLEEP_DURATION)
             print "Dumping threads index"
-            
-            # sort list by date
-            self.threads_index.save()
+            for user in self.threads_index_cache:
+                if self.threads_index_cache[user]["dirty"]:
+                    self.threads_index_cache[user]["threads_index"].save()
+                    self.threads_index_cache[user]["dirty"] = False
             
 def process_new_email(path, threads_index):
     with open(path, "r") as fd:
@@ -84,9 +83,9 @@ def process_new_email(path, threads_index):
         if subject != None:
             subject = headers.cleanup_subject(subject)
             thread = None
-            for index, thr in enumerate(threads_index.data):
+            for index, thr in enumerate(threads_index):
                 if thr["subject"] == subject:
-                    thread = threads_index.data.pop(index)
+                    thread = threads_index.pop(index)
                     break
 
             if not thread:
@@ -97,23 +96,29 @@ def process_new_email(path, threads_index):
             msg_id = os.path.basename(path)
             thread["messages"].append(msg_id)
             thread["date"] = datetime.datetime.utcnow()
-            threads_index.data.insert(0, thread)
-
-
+            threads_index.insert(0, thread)
 
 class ProcessorThread(threading.Thread):
-    def __init__(self, path, threads_index):
+    def __init__(self, path, threads_index_cache):
         threading.Thread.__init__(self)
         self.path = path
 
-        self.threads_index = threads_index
+        self.threads_index_cache = threads_index_cache
     def run(self):
         while True:
             while len(events_queue) != 0:
                 event = events_queue.pop(0)
                 if event["type"] == "create":
                     try:
-                        process_new_email(event["path"], self.threads_index)
+                        username = users.get_username_from_folder(event["path"]) 
+
+                        if username not in self.threads_index_cache:
+                            threads_index = users.get_user_threads_index(event["path"])
+                            print "Getting threads_index for user : %s" % username
+                            self.threads_index_cache[username] = {"threads_index": threads_index, "dirty": True}
+                        
+                        process_new_email(event["path"], threads_index_cache[username]["threads_index"].data)
+                        threads_index_cache[username]["dirty"] = True
                     except IOError:
                         # This may be a Postfix/Dovecot temporary file. Ignore it.
                         pass
@@ -125,13 +130,11 @@ if __name__ == "__main__":
     path = sys.argv[1]
     print "Watching %s..." % path
 
-    threads_index = JsonFile(os.path.join(path, "threads_index.json"))
-    if threads_index.data == None:
-            threads_index.data = [] 
+    threads_index_cache = {}
 
     watcher_thread = WatcherThread(path)
-    processor_thread = ProcessorThread(path, threads_index)
-    dumper_thread = DumperThread(path, threads_index)
+    processor_thread = ProcessorThread(path, threads_index_cache)
+    dumper_thread = DumperThread(path, threads_index_cache)
 
     processor_thread.start()
     watcher_thread.start()

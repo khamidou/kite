@@ -20,6 +20,7 @@ def index(user):
 
 @route('/kite/<user>/mail/<id>')
 def index(user, id):
+            # FIXME: input sanitization
             threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
             thread = None
 
@@ -27,7 +28,6 @@ def index(user, id):
                 if thr["id"] == id:
                     thread = thr
 
-            sys.stderr.write("thre % s" % json.dumps(thread, cls=jsonfile.DatetimeEncoder))
             if thread == None:
                 abort(404, "Thread not found.")
 
@@ -39,7 +39,7 @@ def index(user, id):
                         "id": thread["id"]
             }
 
-            mdir = read_mail(sys.argv[1])
+            mdir = read_mail("/home/kite/Maildirs/%s" % user)
             for mail_id in thread["messages"]:
                 ret_json["messages"].append(get_email(mdir, mail_id)) 
 
