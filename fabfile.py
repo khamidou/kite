@@ -7,6 +7,10 @@ from setup_config import *
 
 PACKAGES = ('rsync', 'puppet')
 
+def provision():
+    cmd = """FACTER_server_name="%s" && export FACTER_server_name && FACTER_user_home_dir=$HOME && export FACTER_user_home_dir && puppet apply $HOME/kite/manifests/server.pp --modulepath=$HOME/kite/puppet_modules""" % env.hosts[0]
+    sudo(cmd)
+
 def setup():
     sudo("apt-get update")
 
@@ -14,7 +18,6 @@ def setup():
         sudo('apt-get -y install %s' % package)
 
     rsync_project("~", "../kite", exclude=[".git/", "*.swp", "*.pyc"])
-    sudo("FACTER_user_home_dir=$HOME && export FACTER_user_home_dir && puppet apply $HOME/kite/manifests/server.pp --modulepath=$HOME/kite/puppet_modules")
-
+    provision()
     local("ssh-copy-id %s@%s" % (env.user, env.hosts[0]))
     sudo("puppet apply $HOME/kite/manifests/sshd.pp --modulepath=$HOME/kite/puppet_modules")
