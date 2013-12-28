@@ -142,10 +142,17 @@ ul.inbox-list li.currentInbox {
     display: block;
     float: right;
 }
-/* email */
+
+/* threadView */
+
+.threadView {
+    background-color: #fff;
+}
+
 .subjectLine {
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
+    padding-left: 5px;
 }
 
 .recipients {
@@ -153,6 +160,7 @@ ul.inbox-list li.currentInbox {
 }
 
 .emailContents {
+    padding-left: 5px;
     padding-bottom: 10px;
     border-bottom: 1px solid #ccc;
     background-color: #fff;
