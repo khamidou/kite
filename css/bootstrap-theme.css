@@ -15,6 +15,7 @@ header {
     background-color: #074A90;
     color: #fff;
     text-shadow: #333 0px -1px, #333 0px 1px; 
+    margin-bottom: 20px;
 }
 
 header h1 {
