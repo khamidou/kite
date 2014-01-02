@@ -1,7 +1,9 @@
 @import url(bootstrap.css);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,900);
 
 body {
     padding-bottom: 40px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body a {
@@ -10,14 +12,32 @@ body a {
 
 header {
     width: 100%; 
-    height: 150px;
-    background-color: blue
+    background-color: #074A90;
+    color: #fff;
+    text-shadow: #333 0px -1px, #333 0px 1px; 
 }
 
 header h1 {
-    font-size: 3.2em;
+    font-size: 3.8em;
+    padding-top: 0.7em;
+    margin-top: 0px;
 }
 
+header h3 {
+    font-size: 1.5em;
+}
+
+header a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+header a:hover {
+    color: #fff;
+}
+.heavy {
+    font-weight: 900;
+}
 /* Custom container */
 .container-narrow {
     margin: 0 auto;
@@ -66,26 +86,22 @@ header h1 {
     text-decoration: none;
 }
 /* duplicated from the app code */ 
-button.btn {
-    border-radius: 3px;
+a.btn {
+    border-radius: 2px;
+    background-color: #ff4133;
+    background-image: none;
+    font-weight: 900;
+    text-shadow: 1px 1px #777;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    border: none;
+    padding: 10px 10px 10px 10px;
 }
 
-a.btn.btn-primary  {
-    background-image: linear-gradient(to bottom, #889ED3, #4162AF);
-    background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
+a.btn:hover {
+    color: #fff;
+    background-color: #ff5044;
 }
 
-a.btn.btn-primary:hover  {
-    background-position: 0 0;
-    background-image: -webkit-linear-gradient(top, #6A86C8, #4264B3);
-    background-image: -moz-linear-gradient(top, #6A86C8, #4264B3);
-    background-image: -o-linear-gradient(top, #6A86C8, #4264B3);
-    background-image: linear-gradient(top, #6A86C8, #4264B3);
-    transition: none;
-}
 
-#cta:hover, #cta:focus {
-    background-color: none;
-    background-position: none;
-    transition: none;
-}
