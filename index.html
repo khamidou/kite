@@ -32,8 +32,9 @@
         </header>
         <div class="container-narrow">
             <div class="row-fluid marketing">
-                <div class="span12">
-                    <p>Kite is a gmail clone you can install on a server of your own. It's pretty limited for the moment: there's no sending functionality yet. I hope to get something usable in the next few months.</p>
+                <div class="span12 copywriting">
+                    <p class="tldr">Kite is a gmail clone you can install on a server of your own. It's pretty limited for the moment, but I hope to get something usable in the next few months.<br><br>
+                        If you're feeling adventurous, here's <a href="#setup">how to install the latest Kite alpha on your server</a>.  </p>
 
                     <a id="screenshots" class="anchor">
                         <h3>Screenshots (click thumbnails to enlarge)</h3>
@@ -57,48 +58,39 @@
                     </p> 
                     <a href="img/login.png"><img src="img/login_thumb.png" /></a>
 
-                </div>
-                <div class="row-fluid">
-                    <div class="span12">
-                        <a id="screenshots" class="anchor">
-                            <h3>Why?</h3>
-                        </a>
-     
-                        <p>
-                            I really like gmail. I use it a <i>lot</i>. Google got a lot of things right when they designed it. 
-                            However I'd like to be in control of my data, and to host it in on my own server.
-                        </p>
+                   <a id="setup" class="anchor">
+                        <h3>Setup</h3>
+                    </a>
 
-                        <p>
-                            A few months ago I decided to set up my own mail server so I started shopping around for potential solutions. 
-                            A lot of the components that make an email server already work : Postfix for email handling, 
-                            Dovecot for IMAP, Spamassassin for SPAM and ElasticSearch for searching. 
-                       </p>
-                       <p>
-                           Unfortunately, I didn't find a webmail that would cut it, so I decided to write my own. 
-                           After a few months of coding, kite was born!
-                       </p>
-                        <p>
-                        Kite is still very much alpha software : it can only display individual messages. I hope to get something a lot more useable in the next few months, though. I'll start with threading, gmail-style, and the old school compose.
-                        </p>
+<pre>
+git clone http://github.com/khamidou/kite # Get the latest sources
+cd kite
+fab setup myhostname.example.com
+</pre>
+ 
+                    <p>
+                        I really like gmail. I use it a <i>lot</i>. Google got a lot of things right when they designed it. 
+                        However I'd like to be in control of my data, and to host it in on my own server.
+                    </p>
 
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="row-fluid marketing">
-                <div class="span12">
+                    <p>
+                        A few months ago I decided to set up my own mail server so I started shopping around for potential solutions. 
+                        A lot of the components that make an email server already work : Postfix for email handling, 
+                        Dovecot for IMAP, Spamassassin for SPAM and ElasticSearch for searching. 
+                   </p>
+                   <p>
+                       Unfortunately, I didn't find a webmail that would cut it, so I decided to write my own. 
+                       After a few months of coding, kite was born!
+                   </p>
+                    <p>
+                    Kite is still very much alpha software : it can only display individual messages. I hope to get something a lot more useable in the next few months, though. I'll start with threading, gmail-style, and the old school compose.
+                    </p>
                     <h3>Will it be easy to install?</h3>
                     <p>
                         Kite uses puppet for deployments. This means that deploying a new mail server, including a postfix config with sensible defaults, can be done in minutes ! 
                     </p>
-                </div>
-            </div>
 
-            <div class="row-fluid marketing">
-                <div class="span12">
-                    <h3>How can I contribute?</h3>
+                   <h3>How can I contribute?</h3>
                     <p>
                         The code and the issues are hosted on <a href="https://github.com/khamidou/kite">Github</a>. 
                     </p>

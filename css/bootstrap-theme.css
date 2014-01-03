@@ -33,9 +33,10 @@ header a {
     text-decoration: underline;
 }
 
-header a:hover {
+header a:hover, header a:focus {
     color: #fff;
 }
+
 .heavy {
     font-weight: 900;
 }
@@ -55,20 +56,6 @@ header a:hover {
     background: none;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-    text-align: center;
-}
-.jumbotron h1 {
-    font-size: 72px;
-    line-height: 1;
-}
-
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-}
-
 /* Supporting marketing content */
 .marketing {
     margin: 10px 0;
@@ -76,6 +63,15 @@ header a:hover {
 
 .marketing p + h4 {
     margin-top: 28px;
+}
+
+.marketing p {
+    margin-bottom: 10px;
+}
+
+.marketing p.tldr {
+    font-weight: 600;
+    margin-bottom: 25px;
 }
 
 .anchor {
@@ -92,7 +88,7 @@ a.btn {
     background-color: #ff4133;
     background-image: none;
     font-weight: 900;
-    text-shadow: 1px 1px #777;
+    text-shadow: 1px 1px #333;
     text-decoration: none;
     font-size: 18px;
     color: #fff;
@@ -100,9 +96,10 @@ a.btn {
     padding: 10px 10px 10px 10px;
 }
 
-a.btn:hover {
+a.btn:hover, a.btn:focus {
     color: #fff;
     background-color: #ff5044;
+    background-position: none;
 }
 
 
