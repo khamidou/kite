@@ -6,15 +6,15 @@
             <button class="btn">More</button>
         </div>
     </div>
-    <div class="row-fluid" class="threadView">
+    <div class="row-fluid threadView">
             <!-- FIXME: make a directive of this -->
             <div class="row-fluid subjectLine">
                 <h4>{{thread.subject}}</h4>
             </div>
 
-            <div ng-repeat="mail in thread.messages | orderBy:'date'">
+            <div ng-repeat="mail in thread.messages | orderBy:'date'" class="emailsList">
                    <div class="row-fluid">
-                        <div class="span4">
+                        <div class="span4 sender">
                             <span ng-show="mail.from.name">
                                 {{mail.from.name}}
                             </span>
@@ -22,7 +22,7 @@
                                 {{ mail.from.address }}
                             </span>
                         </div>
-                        <div class="span2 offset6">
+                        <div class="span2 offset6 date">
                             <div>{{mail.date|formatDate}}</div>
                         </div>
                     </div>
