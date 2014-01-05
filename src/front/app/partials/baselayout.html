@@ -23,11 +23,11 @@
         <div class="row-fluid">
             <div id="sidebar" class="span3">
                 <div class="well sidebar-nav">
-                    <ul class="nav nav-list inbox-list" ng-controller="InboxesListController">
+                    <ul class="nav inboxList" ng-controller="InboxesListController">
                         <li>
-                            <button type="button" class="btn btn-primary btn-compose">Compose</button>
+                            <button class="btn btn-primary btn-compose">Compose</button>
                         </li>
-                        <li class="currentInbox">Inbox <span class=unreadMailCount">4</span></li>
+                        <li class="currentInbox">Inbox <span class=unreadMailCount">(4)</span></li>
                         <li ng-repeat="inbox in inboxes">{{inbox.name}}</li>
                     </ul>
                 </div>    

@@ -4,14 +4,6 @@
 
 /* bootstrap style changes - scroll down for the kite-specific styles. 
  * FIXME: maybe have cleaner overrides? */
-button.btn {
-    border-radius: 3px;
-}
-
-button.btn.btn-primary  {
-    background-image: linear-gradient(to bottom, #889ED3, #4162AF);
-    background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
-}
 
 .btn-primary:hover,
 .btn-primary:focus,
@@ -51,7 +43,8 @@ input[type="color"]:focus,
 }
 
 .sidebar-nav {
-    padding: 9px 0;
+    padding: 0px 0;
+    padding-bottom: 9px;
     box-shadow: none;
     border-radius: 3px;
 }
@@ -108,26 +101,29 @@ body {
 
 .btn-compose {
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.btn-compose:hover {
+    background-position: none;
 }
 
 div.container-fluid.contentContainer {
     padding-left: 0px;
 }
 
-ul.inbox-list {
+ul.inboxList {
     padding-left: 0px;
 }
 
-ul.inbox-list li {
+ul.inboxList li {
     line-height: 18px;
     padding-bottom: 5px;
-    padding-top: 5px;
     padding-left: 15px;
 }
 
-ul.inbox-list li.currentInbox {
-    background-color: #babde6;
+ul.inboxList li.currentInbox {
+    color: #ff4133; 
 }
 
 .unreadMailCount {
@@ -166,3 +162,18 @@ ul.inbox-list li.currentInbox {
     border-top: 1px solid #ccc;
 }
 
+button.btn {
+        border-radius: 3px;
+}
+
+button.btn.btn-primary {
+    background-image: linear-gradient(to bottom, #889ED3, #4162AF);
+    background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
+    background-image: -o-linear-gradient(top, #889ED3, #4162AF);
+    background-image: -ms-linear-gradient(top, #889ED3, #4162AF);
+}
+
+button.btn.btn-primary:hover,
+button.btn.btn-primary:focus {
+    background-position: 0px;
+}
