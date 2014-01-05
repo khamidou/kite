@@ -9,7 +9,7 @@ from maildir import *
 
 @route('/kite/<user>/mail')
 def index(user):
-            # FIXME: input sanitization
+            # FIXME: input sanitization - check permissions for user
             threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
             ret_threads = []
             for thread in threads_index.data[-50:]:
@@ -20,7 +20,7 @@ def index(user):
 
 @route('/kite/<user>/mail/<id>')
 def index(user, id):
-            # FIXME: input sanitization
+            # FIXME: input sanitization check perms
             threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
             thread = None
 
@@ -30,6 +30,9 @@ def index(user, id):
 
             if thread == None:
                 abort(404, "Thread not found.")
+
+            thr["unread"] = False
+            threads_index.save() # FIXME: race condition here
 
             response.content_type = "application/json"
 

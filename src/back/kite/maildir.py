@@ -6,8 +6,9 @@ def read_mail(path):
     mdir = mailbox.Maildir(path)
     return mdir
 
-def extract_email(msg):
-    """Extract all the interesting fields from an email"""
+def extract_email_headers(msg):
+    """Extract headers from email"""
+
     msg_obj = {}
     msg_obj["from"] = {}
     from_field = msg.getheaders('From')[0]
@@ -17,6 +18,12 @@ def extract_email(msg):
 
     msg_obj["subject"] = msg.getheaders('Subject')[0]
     msg_obj["date"] = msg.getheaders('Date')[0]
+
+    return msg_obj
+
+def extract_email(msg):
+    """Extract all the interesting fields from an email"""
+    msg_obj = extract_email_headers(msg)
     msg_obj["contents"] = msg.fp.read()
     return msg_obj
 

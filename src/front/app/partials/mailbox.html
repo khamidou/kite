@@ -15,11 +15,18 @@
             </tr>
             <tr ng-repeat="thread in threads | orderBy:'-date':reverse ">
                     <td>
-                        <span ng-show="thread.name">
-                            {{thread.name}} ({{thread.from}})
+                        <span ng-show="thread.creator.name">
+                            {{thread.creator.name}}
+                            <span ng-show="thread.lastreplyfrom.name">
+                                , {{thread.lastreplyfrom.name}}
+                            </span>
+                            <span ng-hide="thread.lastreplyfrom.name">
+                                , {{thread.lastreplyfrom.address}}
+                            </span>
+
                         </span>
-                        <span ng-hide="thread.name">
-                            {{ thread.from }}
+                        <span ng-hide="thread.creator.name">
+                            {{ thread.creator.address }}
                         </span>
                     </td>
                     <td>

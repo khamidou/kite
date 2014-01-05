@@ -20,6 +20,7 @@ import threads
 import headers
 import users
 from jsonfile import JsonFile
+import maildir
 
 # The architecture is pretty simple. This program is multithreaded.
 # One thread is the producer. It uses inotify to detect changes to the
@@ -78,7 +79,12 @@ def process_new_email(path, threads_index):
     with open(path, "r") as fd:
         parser = email.parser.HeaderParser()
         email_headers = parser.parse(fd)
-        subject = email_headers.get("Subject")
+        
+        subject = email_headers["subject"]
+        from_field = {}
+        from_field["name"], from_field["address"] = email.utils.parseaddr(email_headers["From"])
+        to_field = {}
+        to_field["addresses"] = email.utils.getaddresses(email_headers["to"])
 
         if subject != None:
             subject = headers.cleanup_subject(subject)
@@ -92,10 +98,16 @@ def process_new_email(path, threads_index):
                 # create a new thread
                 thread = threads.create_thread_structure()
                 thread["subject"] = subject
+                thread["creator"] = from_field
 
             msg_id = os.path.basename(path)
             thread["messages"].append(msg_id)
             thread["date"] = datetime.datetime.utcnow()
+            thread["unread"] = True
+
+            if from_field["address"] != thread["creator"]["address"]:
+                thread["lastreplyfrom"] = from_field
+
             threads_index.insert(0, thread)
 
 class ProcessorThread(threading.Thread):
