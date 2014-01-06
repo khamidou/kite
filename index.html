@@ -62,10 +62,38 @@
                         <h3>Setup</h3>
                     </a>
 
+                    <p>
+                    Setting up Kite is pretty easy. The only tricky part is the DNS.
+                    </p>
+
+                    <h4>Setting up your machine</h4>
+                    <p>
+                        You'll need a machine (real or virtual) to install Kite on.
+                        Install Ubuntu server 12.04LTS on it.
+                    </p>
+
+                    <h4>Setting up the DNS</h4>
+
+                    <p>
+                        Let's say you own the domain "example.com" and you want to host a Kite instance at <code>mail.example.com</code>. Let's also say that your server's IP address is <code>192.168.50.4</code>.
+
+                    You'll have to modify your domain's DNS configuration on your registrar's website.
+                    Unfortunately, all registrars have different and sometimes very confusing interfaces. To add to this,
+                    DNS is complicated too.
+
+                    Here's what you'll have to add to your DNS config:
+                    <ul>
+                        <li>one A record to point to your server's IP address.</li>
+                        <li>one MX record, with priority 10 </li>
+                    </ul>
+                    </p>
+
+                    <h4>Installing Kite</h4>
+
 <pre>
 git clone http://github.com/khamidou/kite # Get the latest sources
 cd kite
-fab setup myhostname.example.com
+fab setup -u username -H myhostname.example.com
 </pre>
  
                     <p>
