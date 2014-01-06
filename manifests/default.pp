@@ -1,7 +1,5 @@
 # this is the main config file for puppet
 
-import "settings.pp"
-
 exec {"apt-get update":
         path =>  ["/usr/bin/", "/usr/sbin"],
 }

@@ -1,5 +1,4 @@
 # Puppet manifest for setting up kite on vagrant
-
 import "default.pp"
 
 host {'kitebox.dev':
