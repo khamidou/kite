@@ -68,34 +68,96 @@
 
                     <h4>Setting up your machine</h4>
                     <p>
-                        You'll need a machine (real or virtual) to install Kite on.
-                        Install Ubuntu server 12.04LTS on it.
+                        You'll need a machine (real or virtual) with Ubuntu 12.04LTS. Debian should probably work, but I haven't tested it yet. 
                     </p>
 
                     <h4>Setting up the DNS</h4>
 
                     <p>
-                        Let's say you own the domain "example.com" and you want to host a Kite instance at <code>mail.example.com</code>. Let's also say that your server's IP address is <code>192.168.50.4</code>.
+                    This is the trickiest part of the setup because you'll have to modify your domain's DNS configuration on your registrar's website. Unfortunately, DNS is complicated and all registrars have different and sometimes very confusing interfaces.
+                    </p>
 
-                    You'll have to modify your domain's DNS configuration on your registrar's website.
-                    Unfortunately, all registrars have different and sometimes very confusing interfaces. To add to this,
-                    DNS is complicated too.
+                    <p><b>These instructions are pretty high-level, so don't hesitate to <a href=#contact>contact me</a> if you need additional guidance.</b></p>
+ 
 
-                    Here's what you'll have to add to your DNS config:
+                    <p>
+                        Let's say you own the domain "example.com", a server at IP address <code>192.168.50.4</code>,
+                        and you'd like to deploy a kite instance on it.
+                    </p>
+                    <p>
+                    You'll need to add to your DNS config:
+                    </p>
                     <ul>
                         <li>one A record to point to your server's IP address.</li>
-                        <li>one MX record, with priority 10 </li>
+                        <li>one MX record to specify the mail server for your domain.</li>
                     </ul>
+                    <br>
+
+                    <p>
+                        In the case of our example.com domain, this is what the config should look like:
+                    </p>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Record name</th>
+                            <th>Record value</th>
+                            <th>Record type</th>
+                            <th>Time-To-Live</th>
+                        </tr>
+                        <tr>
+                            <td>mail</td>
+                            <td>192.168.50.4</td>
+                            <td>A</td>
+                            <td>1h</td>
+                        </tr>
+                        <tr>
+                            <td>@</td>
+                            <td>mail.example.com. (This is not a typo. The value ends with a '.')</td>
+                            <td>MX</td>
+                            <td>1h</td>
+                        </tr>
+                    </table>
+
+
                     </p>
 
                     <h4>Installing Kite</h4>
 
-<pre>
+                    <p>The rest of the install is pretty easy:</p>
+                    <ul>
+                        <li>Get the latest sources<br><br>
+                    <pre>
 git clone http://github.com/khamidou/kite # Get the latest sources
+                    </pre>
+                        </li>
+                        <li>
+                            Install <a href="http://docs.fabfile.org/en/1.8/">Fabric</a> (assuming you are using a debian based distro).
+                            <br><br>
+
+                            <pre>
+sudo apt-get install fabric
+                            </pre>
+                        </li>
+                        <li>
+                            Run the setup (the setup is run as root, but any user who is a sudoer can be used instead)<br><br>
+<pre>
 cd kite
-fab setup -u username -H myhostname.example.com
+fab setup -u root -H mail.example.com
 </pre>
+                        </li>
+                        <li>
+                            Optionaly, if you'd like to have a more secure server, run:<br><br>
+                           <pre>
+fab tighten -u root -H mail.example.com
+</pre> 
+                            Running <code>tighten</code> disables ssh password-based auth and setups fail2ban, among other things.
+                    </ul>
+
+                    <p>
+                        <b>You're done! You now have a functional instance of kite running!</b>
+                    </p>
+
  
+                    <h3>Why Kite? </h3>
                     <p>
                         I really like gmail. I use it a <i>lot</i>. Google got a lot of things right when they designed it. 
                         However I'd like to be in control of my data, and to host it in on my own server.
@@ -113,17 +175,13 @@ fab setup -u username -H myhostname.example.com
                     <p>
                     Kite is still very much alpha software : it can only display individual messages. I hope to get something a lot more useable in the next few months, though. I'll start with threading, gmail-style, and the old school compose.
                     </p>
-                    <h3>Will it be easy to install?</h3>
-                    <p>
-                        Kite uses puppet for deployments. This means that deploying a new mail server, including a postfix config with sensible defaults, can be done in minutes ! 
-                    </p>
-
                    <h3>How can I contribute?</h3>
                     <p>
                         The code and the issues are hosted on <a href="https://github.com/khamidou/kite">Github</a>. 
                     </p>
                     <p>
-                        You can also shoot me an email at kite~khamidou.com (replace ~ with @) for suggestions or improvements. 
+                        <a name="contact"></a>
+                        You can also shoot me an email at <b>kite~khamidou.com</b> (replace ~ with @) for suggestions or improvements. 
                     </p>
                     <p>
                         The frontend is written in Javascript with AngularJS, and the backend is in python2.
