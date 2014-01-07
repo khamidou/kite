@@ -69,9 +69,9 @@ class DumperThread(threading.Thread):
     def run(self):
         while True:
             time.sleep(DUMPER_SLEEP_DURATION)
-            print "Dumping threads index"
             for user in self.threads_index_cache:
                 if self.threads_index_cache[user]["dirty"]:
+                    print "Dumping threads index for user %s" % user
                     self.threads_index_cache[user]["threads_index"].save()
                     self.threads_index_cache[user]["dirty"] = False
             
