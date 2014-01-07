@@ -24,7 +24,7 @@ supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 serverurl=unix:///tmp/supervisor.sock ; use a unix:// URL  for a unix socket
 
 [program:filterdaemon]
-command=<%= appdir %>/filterdaemon.py <%= maildirs %> ; the program (relative uses PATH, can take args)
+command=<%= appdir %>filterdaemon.py <%= maildirs %> ; the program (relative uses PATH, can take args)
 process_name=filterdaemon_sup ; process_name expr (default %(program_name)s)
 stdout_logfile=/tmp/filterdaemon.out        ; stdout log path, NONE for none; default AUTO
 redirect_stderr=true
