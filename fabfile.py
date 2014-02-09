@@ -23,5 +23,10 @@ def setup():
 
     update_sources()
     provision()
+
+def tighten():
     local("ssh-copy-id %s@%s" % (env.user, env.hosts[0]))
     sudo("puppet apply $HOME/kite/manifests/sshd.pp --modulepath=$HOME/kite/puppet_modules")
+
+
+
