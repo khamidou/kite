@@ -14,16 +14,17 @@ def provision():
     cmd = """FACTER_server_name="%s" && export FACTER_server_name && FACTER_user_home_dir=$HOME && export FACTER_user_home_dir && puppet apply $HOME/kite/manifests/server.pp --modulepath=$HOME/kite/puppet_modules""" % env.hosts[0]
     sudo(cmd)
 
+def update():
+    update_sources()
+    provision()
+ 
 def setup():
     sudo("apt-get update")
-
-    
     for package in PACKAGES:
         sudo('apt-get -y install %s' % package)
 
-    update_sources()
-    provision()
-
+    update()
+ 
 def tighten():
     local("ssh-copy-id %s@%s" % (env.user, env.hosts[0]))
     sudo("puppet apply $HOME/kite/manifests/sshd.pp --modulepath=$HOME/kite/puppet_modules")
