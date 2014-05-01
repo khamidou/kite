@@ -10,7 +10,12 @@ from maildir import *
 @route('/kite/<user>/mail')
 def index(user):
             # FIXME: input sanitization - check permissions for user
-            threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
+            try:
+                threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
+            except IOError:
+                response.status = 400
+                return
+
             ret_threads = []
             for thread in threads_index.data[-50:]:
                 ret_threads.append(thread)

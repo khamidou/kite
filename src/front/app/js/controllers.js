@@ -10,9 +10,9 @@ angular.module('KiteMail.controllers', []).
             {"name": "Spam",  },];
             
 }).controller('MailsListController', ['$scope', 'Emails', function($scope, Emails) {
-        $scope.threads = Emails.threads({username: "kite"});
+        $scope.threads = Emails.threads({username: "testuser"});
 }]).controller('LoginController', function($scope) {
     
 }).controller('ThreadController', function($scope, $routeParams, Emails) {
-    $scope.thread = Emails.thread({username: "kite", "id": $routeParams.id});
+    $scope.thread = Emails.thread({username: "testuser", "id": $routeParams.id});
 });

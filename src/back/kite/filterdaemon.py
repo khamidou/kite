@@ -123,6 +123,7 @@ class ProcessorThread(threading.Thread):
                 if event["type"] == "create":
                     try:
                         username = users.get_username_from_folder(event["path"]) 
+                        print "username: %s, path: %s\n" % (username, event["path"])
 
                         if username not in self.threads_index_cache:
                             threads_index = users.get_user_threads_index(event["path"])
