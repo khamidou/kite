@@ -70,8 +70,10 @@ class DumperThread(threading.Thread):
         while True:
             time.sleep(DUMPER_SLEEP_DURATION)
             for user in self.threads_index_cache:
+                print "dumper " + user
                 if self.threads_index_cache[user]["dirty"]:
-                    print "Dumping threads index for user %s" % user
+                    print "Dumping threads index for user %s at location %s " % (user, self.threads_index_cache[user]["threads_index"].path)
+
                     self.threads_index_cache[user]["threads_index"].save()
                     self.threads_index_cache[user]["dirty"] = False
             
@@ -114,8 +116,8 @@ class ProcessorThread(threading.Thread):
     def __init__(self, path, threads_index_cache):
         threading.Thread.__init__(self)
         self.path = path
-
         self.threads_index_cache = threads_index_cache
+
     def run(self):
         while True:
             while len(events_queue) != 0:
@@ -130,10 +132,11 @@ class ProcessorThread(threading.Thread):
                             print "Getting threads_index for user : %s" % username
                             self.threads_index_cache[username] = {"threads_index": threads_index, "dirty": True}
                         
-                        process_new_email(event["path"], threads_index_cache[username]["threads_index"].data)
-                        threads_index_cache[username]["dirty"] = True
-                    except IOError:
+                        process_new_email(event["path"], self.threads_index_cache[username]["threads_index"].data)
+                        self.threads_index_cache[username]["dirty"] = True
+                    except IOError as e:
                         # This may be a Postfix/Dovecot temporary file. Ignore it.
+                        print "caught ioerror %s" % e.strerror
                         pass
                     
             time.sleep(EVENTS_QUEUE_PROCESSING_DELAY)

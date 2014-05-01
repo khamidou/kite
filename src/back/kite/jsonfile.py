@@ -29,11 +29,14 @@ class JsonFile(object):
         self.refresh()
 
     def refresh(self):
-        if self.path != None:
-            with FileLock(self.path):
-                fd = open(self.path, "r")
-                self.data = json.load(fd, object_hook=deserialize_datetime)
-                fd.close()
+        try:
+            if self.path != None:
+                with FileLock(self.path):
+                    fd = open(self.path, "r")
+                    self.data = json.load(fd, object_hook=deserialize_datetime)
+                    fd.close()
+        except IOError:
+            pass
      
     def save(self, path=None):
         if path == None:
