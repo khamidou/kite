@@ -27,18 +27,84 @@
         </ul>
       </header>
       <section>
-        <h2>
-<a name="kite-a-modern-webmail" class="anchor" href="#kite-a-modern-webmail"><span class="octicon octicon-link"></span></a>Kite, a modern webmail</h2>
-
-<p>Kite is a webmail designed to look a lot like gmail and to be easily deployable on a single server.
+        <p>Kite is a webmail designed to look a lot like gmail and to be easily deployable on a single server.
 It's written in Javascript with Angularjs for the frontend, and in Python 2 for the backend.</p>
 
 <p>This is very much alpha software, but I hope to have something usable in a couple months.</p>
 
-<p>You can see a demo <a href="http://dogfood.kiteapp.io">here</a>.</p>
+<p>You can see a demo <a href="http://dogfood.kiteapp.io/app">here</a>.</p>
 
 <h3>
-<a name="how-to-run-it" class="anchor" href="#how-to-run-it"><span class="octicon octicon-link"></span></a>How to run it</h3>
+<a name="vps-setup" class="anchor" href="#vps-setup"><span class="octicon octicon-link"></span></a>VPS Setup</h3>
+
+<p>If you're feeling adventurous, here's how to set it up at a VPS provider like DigitalOcean.</p>
+
+<p>You'll need a machine (real or virtual) with Ubuntu 12.04LTS. Debian should probably work, but I haven't tested it yet.</p>
+
+<h4>
+<a name="dns-setup" class="anchor" href="#dns-setup"><span class="octicon octicon-link"></span></a>DNS Setup</h4>
+
+<p>This is the trickiest part of the setup because you'll have to modify your domain's DNS configuration on your registrar's website. Unfortunately, DNS is complicated and all registrars have different and sometimes very confusing interfaces.</p>
+
+<p><strong>These instructions are pretty high-level, so don't hesitate to contact me if you need additional guidance.</strong></p>
+
+<p>Let's say you own the domain "example.com", a server at IP address <code>192.168.50.4</code>, and you'd like to deploy a kite instance on it.</p>
+
+<p>You'll need to add to your DNS config:</p>
+
+<ul>
+<li>one A record to point to your server's IP address.</li>
+<li>one MX record to specify the mail server for your domain.</li>
+</ul><p>In the case of our example.com domain, this is what the config should look like:</p>
+
+<table>
+<thead><tr>
+<th>Record name</th>
+<th>Record value</th>
+<th>Record type</th>
+<th>Time to Live</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>mail</td>
+<td>192.168.50.4</td>
+<td>A</td>
+<td>1H</td>
+</tr>
+<tr>
+<td>@</td>
+<td>mail.example.com. (This is not a typo. The value ends with a '.')</td>
+<td>MX</td>
+<td>1H</td>
+</tr>
+</tbody>
+</table><h4>
+<a name="the-actual-install" class="anchor" href="#the-actual-install"><span class="octicon octicon-link"></span></a>The actual install</h4>
+
+<p>The rest of the install is pretty easy.</p>
+
+<h5>
+<a name="get-the-latest-sources" class="anchor" href="#get-the-latest-sources"><span class="octicon octicon-link"></span></a>Get the latest sources</h5>
+
+<pre><code>git clone http://github.com/khamidou/kite # Get the latest sources
+</code></pre>
+
+<h5>
+<a name="install-fabric-assuming-you-are-using-a-debian-based-distro" class="anchor" href="#install-fabric-assuming-you-are-using-a-debian-based-distro"><span class="octicon octicon-link"></span></a>Install <a href="http://docs.fabfile.org/en/1.8/">Fabric</a> (assuming you are using a debian based distro).</h5>
+
+<pre><code>sudo apt-get install fabric
+</code></pre>
+
+<p>Run the setup (the setup is run as root, but any user who is a sudoer can be used instead)<br><br></p>
+
+<pre><code>cd kite
+fab setup -u root -H mail.example.com -p root_password
+</code></pre>
+
+<p>After this, navigate to mail.example.com to login to Kite.</p>
+
+<h3>
+<a name="running-the-development-version" class="anchor" href="#running-the-development-version"><span class="octicon octicon-link"></span></a>Running the development version</h3>
 
 <p>To run it, you'll need to have <a href="http://www.vagrantup.com/">vagrant</a> installed.
 When it's done, run:</p>
@@ -55,10 +121,6 @@ your (host) machine /etc/hosts.</p>
 <a name="contacthelp" class="anchor" href="#contacthelp"><span class="octicon octicon-link"></span></a>Contact/Help</h3>
 
 <p>I can be reached at <a href="mailto:contact@khamidou.com">contact@khamidou.com</a>. It try to do my best to reply to all incoming email, but sometimes it may slip through.</p>
-
-<p>regards,</p>
-
-<p>Karim Hamidou</p>
       </section>
     </div>
     <footer>
@@ -66,6 +128,16 @@ your (host) machine /etc/hosts.</p>
       <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
     </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-50617433-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
