@@ -1,23 +1,28 @@
 #!/usr/bin/env python
 import bottle
 import json
-import jsonfile
 import sys
-from jsonfile import JsonFile, serialize_json
+from cabinet import DatetimeCabinet
 from bottle import route, template, response, abort
 from maildir import *
+from utils import serialize_json
 
 @route('/kite/<user>/mail')
 def index(user):
             # FIXME: input sanitization - check permissions for user
             try:
-                threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
+                threads_index = DatetimeCabinet("/home/kite/threads.db")
             except IOError:
                 response.status = 400
                 return
 
             ret_threads = []
-            for thread in threads_index.data[-50:]:
+            try:
+                threads = threads_index[user]["threads_index"]
+            except KeyError:
+                threads = []
+             
+            for thread in threads:
                 ret_threads.append(thread)
 
             response.content_type = "application/json"
@@ -26,10 +31,15 @@ def index(user):
 @route('/kite/<user>/mail/<id>')
 def index(user, id):
             # FIXME: input sanitization check perms
-            threads_index = JsonFile("/home/kite/Maildirs/%s/threads_index.json" % user)
-            thread = None
+            try:
+                threads_index = DatetimeCabinet("/home/kite/threads.db")
+                thread = None
+            except IOError:
+                response.status = 400
+                return
 
-            for thr in threads_index.data:
+            # FIXME: use an index for threads entries ?
+            for thr in threads_index[user]["threads_index"]:
                 if thr["id"] == id:
                     thread = thr
 
@@ -37,7 +47,7 @@ def index(user, id):
                 abort(404, "Thread not found.")
 
             thr["unread"] = False
-            threads_index.save() # FIXME: race condition here
+            threads_index.sync()
 
             response.content_type = "application/json"
 

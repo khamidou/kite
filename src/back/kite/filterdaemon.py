@@ -2,11 +2,6 @@
 # filterdaemon.py 
 # This background process creates indexes files for threads and filters.
 #
-# What is an index file ?
-# =======================
-#
-# An index file is a JSON list which holds the paths to files in a conversation.
-#
 
 import sys
 import os
@@ -19,7 +14,7 @@ import email.parser
 import threads
 import headers
 import users
-from jsonfile import JsonFile
+from cabinet import DatetimeCabinet
 import maildir
 
 # The architecture is pretty simple. This program is multithreaded.
@@ -61,21 +56,15 @@ class WatcherThread(threading.Thread):
         notifier.loop()
 
 class DumperThread(threading.Thread):
-    def __init__(self, path, threads_index_cache):
+    def __init__(self, path, threads_index):
         threading.Thread.__init__(self)
         self.path = path
-        self.threads_index_cache = threads_index_cache
+        self.threads_index = threads_index
 
     def run(self):
         while True:
             time.sleep(DUMPER_SLEEP_DURATION)
-            for user in self.threads_index_cache:
-                print "dumper " + user
-                if self.threads_index_cache[user]["dirty"]:
-                    print "Dumping threads index for user %s at location %s " % (user, self.threads_index_cache[user]["threads_index"].path)
-
-                    self.threads_index_cache[user]["threads_index"].save()
-                    self.threads_index_cache[user]["dirty"] = False
+            self.threads_index.sync()
             
 def process_new_email(path, threads_index):
     with open(path, "r") as fd:
@@ -113,10 +102,10 @@ def process_new_email(path, threads_index):
             threads_index.insert(0, thread)
 
 class ProcessorThread(threading.Thread):
-    def __init__(self, path, threads_index_cache):
+    def __init__(self, path, threads_index):
         threading.Thread.__init__(self)
         self.path = path
-        self.threads_index_cache = threads_index_cache
+        self.threads_index= threads_index
 
     def run(self):
         while True:
@@ -127,13 +116,12 @@ class ProcessorThread(threading.Thread):
                         username = users.get_username_from_folder(event["path"]) 
                         print "username: %s, path: %s\n" % (username, event["path"])
 
-                        if username not in self.threads_index_cache:
-                            threads_index = users.get_user_threads_index(event["path"])
-                            print "Getting threads_index for user : %s" % username
-                            self.threads_index_cache[username] = {"threads_index": threads_index, "dirty": True}
+                        if username not in self.threads_index:
+                            print "Setting threads_index for user : %s" % username
+                            self.threads_index[username] = {"threads_index": [], "dirty": True}
                         
-                        process_new_email(event["path"], self.threads_index_cache[username]["threads_index"].data)
-                        self.threads_index_cache[username]["dirty"] = True
+                        process_new_email(event["path"], self.threads_index[username]["threads_index"])
+                        self.threads_index[username]["dirty"] = True
                     except IOError as e:
                         # This may be a Postfix/Dovecot temporary file. Ignore it.
                         print "caught ioerror %s" % e.strerror
@@ -146,11 +134,11 @@ if __name__ == "__main__":
     path = sys.argv[1]
     print "Watching %s..." % path
 
-    threads_index_cache = {}
+    threads_index = DatetimeCabinet("/home/kite/threads.db")
 
     watcher_thread = WatcherThread(path)
-    processor_thread = ProcessorThread(path, threads_index_cache)
-    dumper_thread = DumperThread(path, threads_index_cache)
+    processor_thread = ProcessorThread(path, threads_index)
+    dumper_thread = DumperThread(path, threads_index)
 
     processor_thread.start()
     watcher_thread.start()
