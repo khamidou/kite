@@ -1,203 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Kite by khamidou</title>
 
-        <title>Introducing Kite !</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-        <!-- custom bootstrap theme -->
-        <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Kite</h1>
+        <p>Kite is a modern webmail</p>
+        <p class="view"><a href="https://github.com/khamidou/kite">View the Project on GitHub <small>khamidou/kite</small></a></p>
+        <ul>
+          <li><a href="https://github.com/khamidou/kite/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/khamidou/kite/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/khamidou/kite">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a name="kite-a-modern-webmail" class="anchor" href="#kite-a-modern-webmail"><span class="octicon octicon-link"></span></a>Kite, a modern webmail</h2>
 
+<p>Kite is a webmail designed to look a lot like gmail and to be easily deployable on a single server.
+It's written in Javascript with Angularjs for the frontend, and in Python 2 for the backend.</p>
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="../../assets/js/html5shiv.js"></script>
-        <script src="../../assets/js/respond.min.js"></script>
-        <![endif]-->
-    </head>
-    <body>
-        <header>
-            <div class="container-narrow">
-                <h1>Kite</h1>
-                <h3>An opensource gmail replacement.</h3>
-                <div style="margin-top: 10px; padding-bottom: 10px;">
-                        <a href="/app" class="btn">Try the demo !</a>
-                        <span class="heavy">OR</span>
-                        <a href="#screenshots">View the screenshots</a>
-                </div>
-            </div>
-        </header>
-        <div class="container-narrow">
-            <div class="row-fluid marketing">
-                <div class="span12 copywriting">
-                    <p class="tldr">Kite is a gmail clone you can install on a server of your own. It's pretty limited for the moment, but I hope to get something usable in the next few months.<br><br>
-                        If you're feeling adventurous, here's <a href="#setup">how to install the latest Kite alpha on your server</a>.  </p>
+<p>This is very much alpha software, but I hope to have something usable in a couple months.</p>
 
-                    <a id="screenshots" class="anchor">
-                        <h3>Screenshots (click thumbnails to enlarge)</h3>
-                    </a>
-                    <p>
-                        Kite doesn't do much for the moment. Basically, it can display the emails in your mailbox.
-                    </p>
-                    
-                    <p>
-                        The general view looks a lot like gmail but barer :
-                    </p>
-                    <a href="img/kite_general.png"><img src="img/kite_general_thumb.png" /></a>
+<p>You can see a demo <a href="http://dogfood.kiteapp.io">here</a>.</p>
 
-                    <p>
-                        Clicking in on a conversation opens the conversation view :
-                    </p> 
-                    <a href="img/kite_thread.png"><img src="img/kite_thread_thumb.png" /></a>
+<h3>
+<a name="how-to-run-it" class="anchor" href="#how-to-run-it"><span class="octicon octicon-link"></span></a>How to run it</h3>
 
-                    <p>
-                        This is your standard login window :
-                    </p> 
-                    <a href="img/login.png"><img src="img/login_thumb.png" /></a>
+<p>To run it, you'll need to have <a href="http://www.vagrantup.com/">vagrant</a> installed.
+When it's done, run:</p>
 
-                   <a id="setup" class="anchor">
-                        <h3>Setup</h3>
-                    </a>
+<pre><code>vagrant up
+</code></pre>
 
-                    <p>
-                    Setting up Kite is pretty easy. The only tricky part is the DNS.
-                    </p>
+<p>After this, browse to <a href="http://192.168.50.4">http://192.168.50.4</a> . You should be greeted by a login window. Use whatever username/password combination to login.</p>
 
-                    <h4>Setting up your machine</h4>
-                    <p>
-                        You'll need a machine (real or virtual) with Ubuntu 12.04LTS. Debian should probably work, but I haven't tested it yet. 
-                    </p>
+<p>The host name of the vagrant box is kitebox.dev. You should probably add it to
+your (host) machine /etc/hosts.</p>
 
-                    <h4>Setting up the DNS</h4>
+<h3>
+<a name="contacthelp" class="anchor" href="#contacthelp"><span class="octicon octicon-link"></span></a>Contact/Help</h3>
 
-                    <p>
-                    This is the trickiest part of the setup because you'll have to modify your domain's DNS configuration on your registrar's website. Unfortunately, DNS is complicated and all registrars have different and sometimes very confusing interfaces.
-                    </p>
+<p>I can be reached at <a href="mailto:contact@khamidou.com">contact@khamidou.com</a>. It try to do my best to reply to all incoming email, but sometimes it may slip through.</p>
 
-                    <p><b>These instructions are pretty high-level, so don't hesitate to <a href=#contact>contact me</a> if you need additional guidance.</b></p>
- 
+<p>regards,</p>
 
-                    <p>
-                        Let's say you own the domain "example.com", a server at IP address <code>192.168.50.4</code>,
-                        and you'd like to deploy a kite instance on it.
-                    </p>
-                    <p>
-                    You'll need to add to your DNS config:
-                    </p>
-                    <ul>
-                        <li>one A record to point to your server's IP address.</li>
-                        <li>one MX record to specify the mail server for your domain.</li>
-                    </ul>
-                    <br>
-
-                    <p>
-                        In the case of our example.com domain, this is what the config should look like:
-                    </p>
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Record name</th>
-                            <th>Record value</th>
-                            <th>Record type</th>
-                            <th>Time-To-Live</th>
-                        </tr>
-                        <tr>
-                            <td>mail</td>
-                            <td>192.168.50.4</td>
-                            <td>A</td>
-                            <td>1h</td>
-                        </tr>
-                        <tr>
-                            <td>@</td>
-                            <td>mail.example.com. (This is not a typo. The value ends with a '.')</td>
-                            <td>MX</td>
-                            <td>1h</td>
-                        </tr>
-                    </table>
-
-
-                    </p>
-
-                    <h4>Installing Kite</h4>
-
-                    <p>The rest of the install is pretty easy:</p>
-                    <ul>
-                        <li>Get the latest sources<br><br>
-                    <pre>
-git clone http://github.com/khamidou/kite # Get the latest sources
-                    </pre>
-                        </li>
-                        <li>
-                            Install <a href="http://docs.fabfile.org/en/1.8/">Fabric</a> (assuming you are using a debian based distro).
-                            <br><br>
-
-                            <pre>
-sudo apt-get install fabric
-                            </pre>
-                        </li>
-                        <li>
-                            Run the setup (the setup is run as root, but any user who is a sudoer can be used instead)<br><br>
-<pre>
-cd kite
-fab setup -u root -H mail.example.com
-</pre>
-                        </li>
-                        <li>
-                            Optionaly, if you'd like to have a more secure server, run:<br><br>
-                           <pre>
-fab tighten -u root -H mail.example.com
-</pre> 
-                            Running <code>tighten</code> disables ssh password-based auth and setups fail2ban, among other things.
-                    </ul>
-
-                    <p>
-                        <b>You're done! You now have a functional instance of kite running!</b>
-                    </p>
-
- 
-                    <h3>Why Kite? </h3>
-                    <p>
-                        I really like gmail. I use it a <i>lot</i>. Google got a lot of things right when they designed it. 
-                        However I'd like to be in control of my data, and to host it in on my own server.
-                    </p>
-
-                    <p>
-                        A few months ago I decided to set up my own mail server so I started shopping around for potential solutions. 
-                        A lot of the components that make an email server already work : Postfix for email handling, 
-                        Dovecot for IMAP, Spamassassin for SPAM and ElasticSearch for searching. 
-                   </p>
-                   <p>
-                       Unfortunately, I didn't find a webmail that would cut it, so I decided to write my own. 
-                       After a few months of coding, kite was born!
-                   </p>
-                    <p>
-                    Kite is still very much alpha software : it can only display individual messages. I hope to get something a lot more useable in the next few months, though. I'll start with threading, gmail-style, and the old school compose.
-                    </p>
-                   <h3>How can I contribute?</h3>
-                    <p>
-                        The code and the issues are hosted on <a href="https://github.com/khamidou/kite">Github</a>. 
-                    </p>
-                    <p>
-                        <a name="contact"></a>
-                        You can also shoot me an email at <b>kite~khamidou.com</b> (replace ~ with @) for suggestions or improvements. 
-                    </p>
-                    <p>
-                        The frontend is written in Javascript with AngularJS, and the backend is in python2.
-                    </p>
-                    <p>
-                        I use Jasmine and unittest.py for the tests.
-                    </p>
-                </div>
-            </div>
-            <hr>
-
-            <div class="footer">
-                <p>&copy; 2014 <a href="http://khamidou.com">Karim Hamidou</a>.</p>
-            </div>
-
-        </div> <!-- /container -->
-    </body>
-</html>
+<p>Karim Hamidou</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/khamidou">khamidou</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
+  </body>
+</html>
