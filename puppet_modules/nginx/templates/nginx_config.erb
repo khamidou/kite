@@ -1,7 +1,7 @@
 server {
     listen 80;
     server_name _;
-    access_log /var/log/nginx/<%= server_name %>.access.log;
+    access_log /var/log/nginx/<%= @server_name %>.access.log;
     charset utf-8;
     client_max_body_size 8m;
     sendfile off; # apparently, it doesn't work so well in virtualized envs.
@@ -16,7 +16,7 @@ server {
     }
 
     location / {
-        root <%= appdir %>/front/app/;
+        root <%= @appdir %>/front/app/;
         autoindex off;
         expires 1M;
     }
