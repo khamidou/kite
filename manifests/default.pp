@@ -5,7 +5,7 @@ exec {"apt-get update":
 }
 
 $packages = ["python", "python-pip", "bpython", 
-             "mutt", "python-pyinotify", "mailutils", "python-leveldb"]
+             "mutt", "python-pyinotify", "mailutils", "python-leveldb", "python-lxml"]
 
 $python_packages = ["python-dateutil"]
 
