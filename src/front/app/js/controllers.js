@@ -13,6 +13,11 @@ angular.module('KiteMail.controllers', []).
         $scope.threads = Emails.threads({username: "testuser"});
 }]).controller('LoginController', function($scope) {
     
-}).controller('ThreadController', function($scope, $routeParams, Emails) {
+}).controller('ThreadController', ['$scope', '$routeParams', '$sce', 'Emails', function($scope, $routeParams, $sce, Emails) {
     $scope.thread = Emails.thread({username: "testuser", "id": $routeParams.id});
-});
+    console.log("YOLO");
+    $scope.trustHTML = function(html_code) {
+        console.log("called");
+        return $sce.trustAsHtml(html_code);
+    };
+}]);

@@ -1,5 +1,7 @@
 import mailbox
+import quopri
 import email.utils
+import lxml.html.clean
 import re
 
 def read_mail(path):
@@ -24,7 +26,19 @@ def extract_email_headers(msg):
 def extract_email(msg):
     """Extract all the interesting fields from an email"""
     msg_obj = extract_email_headers(msg)
-    msg_obj["contents"] = msg.fp.read()
+    
+    fpPos = msg.fp.tell()
+    msg.fp.seek(0)
+    mail = email.message_from_string(msg.fp.read())
+    contents = []
+    for part in mail.walk():
+        if part.get_content_type() == 'text/html':
+            charset = part.get_content_charset()
+            payload = quopri.decodestring(part.get_payload()).decode(charset)
+            contents.append(payload)
+
+    content = "".join(contents)
+    msg_obj["contents"] = lxml.html.clean.clean_html(content).encode('utf-8')
     return msg_obj
 
 def get_emails(mdir):
