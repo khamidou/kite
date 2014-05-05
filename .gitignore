@@ -36,3 +36,4 @@ nosetests.xml
 .pydevproject
 
 push.sh
+src_push.sh
