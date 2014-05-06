@@ -76,6 +76,7 @@ body {
     border: 1px solid #aaa;
     border-radius: 3px;
     padding: 10px;
+    margin-bottom: 0px;
 }
 
 /* topbar */
@@ -162,17 +163,19 @@ ul.inboxList li.currentInbox {
     border-top: 1px solid #ccc;
 }
 
-button.btn {
+input[type="input"].btn, button.btn {
         border-radius: 3px;
 }
 
-button.btn.btn-primary {
+input[type="input"].btn.btn-primary, button.btn.btn-primary {
     background-image: linear-gradient(to bottom, #889ED3, #4162AF);
     background-image: -webkit-linear-gradient(top, #889ED3, #4162AF);
     background-image: -o-linear-gradient(top, #889ED3, #4162AF);
     background-image: -ms-linear-gradient(top, #889ED3, #4162AF);
 }
 
+input[type="input"].btn.btn-primary:hover,
+input[type="input"].btn.btn-primary:focus,
 button.btn.btn-primary:hover,
 button.btn.btn-primary:focus {
     background-position: 0px;

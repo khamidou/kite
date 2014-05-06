@@ -15,7 +15,9 @@ class DatetimeEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 def serialize_json(obj):
-    return json.dumps(obj, cls=DatetimeEncoder)
+    # we prepend this strange string to prevent jsonp vulnerabilities.
+    # see: https://docs.angularjs.org/api/ng/service/$http for more info.
+    return ")]}',\n" + json.dumps(obj, cls=DatetimeEncoder)
 
 def deserialize_json(string):
     return json.loads(string, object_hook=deserialize_datetime)

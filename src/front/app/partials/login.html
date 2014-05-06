@@ -1,26 +1,25 @@
 <div class="loginPage">
     <div class="container loginContainer">
-        <div class="loginForm">
+        <form class="loginForm" ng-submit="doLogin()" ng-controller="LoginController">
             <div class="row-fluid">
                 <div class="span12">
                     <label for="loginField">User name:</label>
-                    <input type="text" name="login" id="loginField" placeholder="User name" value="test"></input>
+                    <input type="text" ng-model="login" id="loginField" placeholder="User name" value="test"></input>
                 </div>
             </div>
 
             <div class="row-fluid">
                 <div class="span12">
                     <label for="passwordField">Password:</label>
-                    <input type="text" name="password" id="passwordField" placeholder="Password" value="test"></input>
+                    <input type="text" ng-model="password" id="passwordField" placeholder="Password" value="test"></input>
                 </div>
             </div>
 
             <div class="row-fluid">
                 <div class="span12">
-                    <a ng-href="#/mail"><button class="loginButton btn btn-primary" id="loginButton">Log me in!</button></a>
+                    <input type="submit" class="loginButton btn btn-primary" id="loginButton" value="Log me in!"></input>
                 </div>
             </div>
-        </div>
-
+        </form>
     </div>
 </div>

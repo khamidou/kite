@@ -9,15 +9,17 @@ angular.module('KiteMail.controllers', []).
             {"name": "Trash", },
             {"name": "Spam",  },];
             
-}).controller('MailsListController', ['$scope', 'Emails', function($scope, Emails) {
+}).controller('MailsListController', ['$scope', 'Emails', 'Auth', function($scope, Emails, Auth) {
         $scope.threads = Emails.threads({username: "testuser"});
-}]).controller('LoginController', function($scope) {
-    
-}).controller('ThreadController', ['$scope', '$routeParams', '$sce', 'Emails', function($scope, $routeParams, $sce, Emails) {
+}]).controller('LoginController', ['Auth', function($scope, Auth) {
+    $scope.doLogin = function() {
+        if($scope.password) {
+            console.log("PASS" + $scope.password);            
+        }
+    }    
+}]).controller('ThreadController', ['$scope', '$routeParams', '$sce', 'Emails', function($scope, $routeParams, $sce, Emails) {
     $scope.thread = Emails.thread({username: "testuser", "id": $routeParams.id});
-    console.log("YOLO");
     $scope.trustHTML = function(html_code) {
-        console.log("called");
         return $sce.trustAsHtml(html_code);
     };
 }]);
