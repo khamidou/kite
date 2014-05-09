@@ -1,23 +1,24 @@
 <div class="loginPage">
-    <div class="container loginContainer">
-        <form class="loginForm" ng-submit="doLogin()" ng-controller="LoginController">
+    <div class="container loginContainer" ng-controller="LoginController">
+        <form class="loginForm" name="loginForm" ng-submit="doLogin(loginForm.$valid)" novalidate>
             <div class="row-fluid">
                 <div class="span12">
                     <label for="loginField">User name:</label>
-                    <input type="text" ng-model="login" id="loginField" placeholder="User name" value="test"></input>
+                    <input type="text" ng-model="username" ng-required="true" id="loginField" placeholder="User name" value="test"></input>
                 </div>
             </div>
 
             <div class="row-fluid">
                 <div class="span12">
                     <label for="passwordField">Password:</label>
-                    <input type="text" ng-model="password" id="passwordField" placeholder="Password" value="test"></input>
+                    <input type="text" ng-model="password" ng-required="true" id="passwordField" 
+                                       placeholder="Password" value="test"></input>
                 </div>
             </div>
 
             <div class="row-fluid">
                 <div class="span12">
-                    <input type="submit" class="loginButton btn btn-primary" id="loginButton" value="Log me in!"></input>
+                    <button type="submit" class="loginButton btn btn-primary" id="loginButton">Log me in!</button>
                 </div>
             </div>
         </form>

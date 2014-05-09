@@ -4,14 +4,14 @@ import json
 import sys
 import users
 from cabinet import DatetimeCabinet
-from bottle import route, template, response, abort, get, post
+from bottle import route, template, request, response, abort, get, post
 from maildir import *
 from utils import serialize_json
 
 @post('/kite/auth')
 def index():
-    username = request.forms.get('username', None)
-    password = request.forms.get('password', None)
+    username = request.json.get('username', None)
+    password = request.json.get('password', None)
     if username == None or password == None:
         response.status = 401
         return
@@ -19,7 +19,7 @@ def index():
     if users.auth_user(username, password):
         response.status = 200
         token = users.gen_token(username, password)
-        response.set_cookie('XSRF-TOKEN', token, max_age=86400, httponly=False)
+        response.set_cookie('XSRF-TOKEN', token, max_age=86400)
         return
 
 @route('/kite/<user>/mail')

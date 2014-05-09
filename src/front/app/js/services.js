@@ -41,7 +41,7 @@ factory('Emails', ['$resource',
             return (date+'').split(' ');
         }
     };   
-}).factory('Auth', ['$http', function() {
+}).factory('Auth', ['$http', function($http) {
     var _isAuth = false;
     var _username = null
     return {
@@ -49,9 +49,9 @@ factory('Emails', ['$resource',
         username: _username,
         doLogin: function(username, password, success, failure) {
             _username = username;
-            $http.post({url: '/kite/auth', params: {"username": username, "password": password}}).
+            $http({url: '/kite/auth', method:'POST',  data: {"username": username, "password": password}}).
                         success(function(data, status, headers, config) {
-                            sucess(data);
+                            success(data);
                         });
         },
 
