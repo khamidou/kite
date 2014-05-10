@@ -8,4 +8,14 @@ angular.module('KiteMail', ['ngRoute', 'KiteMail.filters', 'KiteMail.services', 
     $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'LoginController'});
     $routeProvider.when('/thread/:id', {templateUrl: 'partials/thread.html', controller: 'ThreadController'});
     $routeProvider.otherwise({redirectTo: '/login'});
+  }]).run(['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) { 
+   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+        console.log(Auth.loggedOn());
+        if (!Auth.loggedOn()) {
+            // no logged user, redirect to /login
+            if (next.templateUrl != "partials/login.html") {
+                $location.path("/login");
+            }
+        }
+    }); 
   }]);

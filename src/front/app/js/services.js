@@ -45,12 +45,13 @@ factory('Emails', ['$resource',
     var _isAuth = false;
     var _username = null
     return {
-        isAuth: _isAuth,
+        loggedOn: function() { return _isAuth },
         username: _username,
         doLogin: function(username, password, success, failure) {
             _username = username;
             $http({url: '/kite/auth', method:'POST',  data: {"username": username, "password": password}}).
                         success(function(data, status, headers, config) {
+                            _isAuth = true;
                             success(data);
                         });
         },

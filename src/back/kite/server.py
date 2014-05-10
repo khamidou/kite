@@ -8,6 +8,12 @@ from bottle import route, template, request, response, abort, get, post
 from maildir import *
 from utils import serialize_json
 
+@get('/kite/auth')
+def index():
+    response.status = 200
+    response.set_cookie('XSRF-TOKEN', "blah", max_age=86400)
+    return
+
 @post('/kite/auth')
 def index():
     username = request.json.get('username', None)
