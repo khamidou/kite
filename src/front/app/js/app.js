@@ -10,11 +10,15 @@ angular.module('KiteMail', ['ngRoute', 'KiteMail.filters', 'KiteMail.services', 
     $routeProvider.otherwise({redirectTo: '/login'});
   }]).run(['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) { 
    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-        console.log(Auth.loggedOn());
-        if (!Auth.loggedOn()) {
+        console.log(Auth.loggedIn());
+        if (!Auth.loggedIn()) {
             // no logged user, redirect to /login
             if (next.templateUrl != "partials/login.html") {
                 $location.path("/login");
+            }
+        } else { // already loggedin
+            if (next.templateUrl == "partials/login.html") {
+                $location.path("/mail");
             }
         }
     }); 
