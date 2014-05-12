@@ -8,12 +8,6 @@ from bottle import route, template, request, response, abort, get, post
 from maildir import *
 from utils import serialize_json
 
-@get('/kite/auth')
-def index():
-    response.status = 200
-    response.set_cookie('XSRF-TOKEN', "blah", max_age=86400)
-    return
-
 @post('/kite/auth')
 def index():
     username = request.json.get('username', None)
@@ -25,7 +19,7 @@ def index():
     if users.auth_user(username, password):
         response.status = 200
         token = users.gen_token(username, password)
-        response.set_cookie('XSRF-TOKEN', token, max_age=86400)
+        response.set_cookie('XSRF-TOKEN', token, max_age=86400, path="/")
         return
 
 @route('/kite/<user>/mail')
@@ -47,7 +41,7 @@ def index(user):
                 ret_threads.append(thread)
 
             response.content_type = "application/json"
-            return serialize_json(ret_threads)
+            return serialize_json(ret_threads, protection=False)
 
 @route('/kite/<user>/mail/<id>')
 def index(user, id):

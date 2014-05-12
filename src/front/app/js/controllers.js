@@ -11,11 +11,11 @@ angular.module('KiteMail.controllers', []).
             
 }).controller('MailsListController', ['$scope', 'Emails', 'Auth', function($scope, Emails, Auth) {
         $scope.threads = Emails.threads({username: "testuser"});
-}]).controller('LoginController', ['$scope', 'Auth', function($scope, Auth) {
+}]).controller('LoginController', ['$scope', '$location', 'Auth', function($scope, $location, Auth) {
     $scope.doLogin = function(isValid) {
         if(isValid) {
             var success = function() {
-                console.log("SUCCESS");
+                $location.path("/mail");
             };
             
             var failure = function() {
