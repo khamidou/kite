@@ -5,7 +5,9 @@ exec {"apt-get update":
 }
 
 $packages = ["python", "python-pip", "bpython", 
-             "mutt", "python-pyinotify", "mailutils", "python-leveldb", "python-lxml"]
+             "mutt", "python-pyinotify", "mailutils", 
+             "python-leveldb", "python-lxml", # FIXME: maybe we should switch to pip insted
+             "python-m2crypto"]               # of debian packages
 
 $python_packages = ["python-dateutil"]
 

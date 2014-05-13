@@ -1,6 +1,7 @@
-# users.py - user management functions + commandline tool
+# users.py - user management functions
 import os
-import jsonfile
+import base64
+import M2Crypto
 
 class UserError(Exception):
     pass
@@ -14,5 +15,5 @@ def get_username_from_folder(email_path):
 def auth_user(username, password):
     return True    
 
-def gen_token(username, password):
-    return "BLAHBLAH"
+def gen_token():
+    return base64.b64encode(M2Crypto.m2.rand_bytes(32))

@@ -3,10 +3,44 @@ import bottle
 import json
 import sys
 import users
+import datetime
 from cabinet import DatetimeCabinet
 from bottle import route, template, request, response, abort, get, post
 from maildir import *
 from utils import serialize_json
+
+token_dict = {} # a dict to store auth tokens temporarily
+                # it's not yet necessary to use memcached
+
+def with_valid_token(fn):
+    def check(**kwargs):
+
+        cookie = request.get_cookie('XSRF-TOKEN')
+        if cookie == None:
+            response.status = 401
+            return
+
+        header = request.get_header('X-XSRF-TOKEN')[1:-1] # seems like the header is between quotes
+        if header != cookie:
+            print "HEADER %s CO %s" % (header, cookie)
+            # CSRF protection
+            response.status = 401
+            return
+
+        token_data = token_dict.get(cookie, None)
+        if token_data == None:
+            response.status = 401
+            return
+
+        # if token is older than four hours, invalidate it
+        if token_data["creation_date"] - datetime.datetime.now() > datetime.timedelta(0, 4 * 60 * 60):
+            response.status = 401
+            del token_dict[cookie]
+            return
+
+        return fn(**kwargs)
+
+    return check
 
 @post('/kite/auth')
 def index():
@@ -18,11 +52,13 @@ def index():
 
     if users.auth_user(username, password):
         response.status = 200
-        token = users.gen_token(username, password)
-        response.set_cookie('XSRF-TOKEN', token, max_age=86400, path="/")
+        token = users.gen_token()
+        token_dict[token] = {"creation_date": datetime.datetime.now(), "user": username}
+        response.set_cookie('XSRF-TOKEN', token, path="/") # FIXME: set HTTPOnly when we enable SSL
         return
 
-@route('/kite/<user>/mail')
+@get('/kite/<user>/mail')
+@with_valid_token
 def index(user):
             # FIXME: input sanitization - check permissions for user
             try:
@@ -43,7 +79,8 @@ def index(user):
             response.content_type = "application/json"
             return serialize_json(ret_threads, protection=False)
 
-@route('/kite/<user>/mail/<id>')
+@get('/kite/<user>/mail/<id>')
+@with_valid_token
 def index(user, id):
             # FIXME: input sanitization check perms
             try:
