@@ -23,7 +23,8 @@ class postfix ($server_name, $appdir) {
               false => "test \"x$(postconf -h ${name})\" == 'x${value}'",
               true  => "test \"x$(egrep '^${name} ' /etc/postfix/main.cf | cut -d= -f2 | cut -d' ' -f2)\" == 'x${value}'",
             },
-            notify  => Service["postfix"],
+            # don't notify the service for every little config change. Instead, we do it once when we're updating the postmap
+            #notify  => Service["postfix"],
             require => Package["postfix"]
           }
     }

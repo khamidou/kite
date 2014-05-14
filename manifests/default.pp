@@ -93,3 +93,9 @@ class {'supervisord':
     appdir => "/home/kite/app/back/kite/",
     require => File["/home/kite/app"]
 }
+
+# application-config values
+class {'app_config':
+    server_name => $server_name,
+    require => File["/home/kite/app"]
+}
