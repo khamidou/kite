@@ -79,17 +79,17 @@ class postfix ($server_name, $appdir) {
         content => template('postfix/postfix_vhosts.erb'),
     }
 
-    file {"/etc/postfix/vmaps":
-        owner => "root",
-        group => "root",
-        content => template('postfix/postfix_vmaps.erb'),
-    }
-
-    exec {"postmap /etc/postfix/vmaps":
-        path =>  ["/usr/bin/", "/usr/sbin"],
-        require => File["/etc/postfix/vmaps"],
-        notify => Service["postfix"],
-    }
+    #file {"/etc/postfix/vmaps":
+    #    owner => "root",
+    #    group => "root",
+    #    content => template('postfix/postfix_vmaps.erb'),
+    #}
+    #
+    #exec {"postmap /etc/postfix/vmaps":
+    #    path =>  ["/usr/bin/", "/usr/sbin"],
+    #    require => File["/etc/postfix/vmaps"],
+    #    notify => Service["postfix"],
+    #}
 
     # deliver a copy of all the received emails to user kite
     #postfix_config { 'always_bcc':
