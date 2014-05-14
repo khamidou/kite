@@ -32,7 +32,7 @@ def extract_email(msg):
     mail = email.message_from_string(msg.fp.read())
     contents = []
     for part in mail.walk():
-        if part.get_content_type() == 'text/html':
+        if part.get_content_type() == 'text/plain':
             charset = part.get_content_charset()
             payload = quopri.decodestring(part.get_payload()).decode(charset)
             contents.append(payload)
