@@ -48,7 +48,7 @@ factory('Emails', ['$resource',
         return {
             loggedIn: function() { return _isAuth; },
             username: function() { return _username; },
-            doLogout: function() { _isAuth = false; },
+            doLogout: function() { _isAuth = false; _username = null; },
             doLogin: function(username, password, success, failure) {
                 $http({url: '/kite/auth', method:'POST',  data: {"username": username, "password": password}}).
                             success(function(data, status, headers, config) {
