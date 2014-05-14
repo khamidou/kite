@@ -43,17 +43,17 @@ factory('Emails', ['$resource',
 }).factory('Auth', ['$cookies', '$http', 
     function($cookies, $http) {
         var _isAuth = false;
-        var _username = null
+        var _username = null;
         var _cookies = $cookies;
         return {
             loggedIn: function() { return _isAuth; },
-            username: _username,
+            username: function() { return _username; },
+            doLogout: function() { _isAuth = false; },
             doLogin: function(username, password, success, failure) {
-                _username = username;
                 $http({url: '/kite/auth', method:'POST',  data: {"username": username, "password": password}}).
                             success(function(data, status, headers, config) {
+                                _username = username;
                                 _isAuth = true;
-                                $http.defaults.headers.common["X-XSRF-TOKEN"] = "BLAH";
                                 success(data);
                             });
             },

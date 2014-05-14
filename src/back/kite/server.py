@@ -82,7 +82,6 @@ def index(user):
 @get('/kite/<user>/mail/<id>')
 @with_valid_token
 def index(user, id):
-            # FIXME: input sanitization check perms
             try:
                 threads_index = DatetimeCabinet("/home/kite/threads.db")
                 thread = None
@@ -98,7 +97,7 @@ def index(user, id):
             if thread == None:
                 abort(404, "Thread not found.")
 
-            thr["unread"] = False
+            thread["unread"] = False
             threads_index.sync()
 
             response.content_type = "application/json"
@@ -113,6 +112,6 @@ def index(user, id):
             for mail_id in thread["messages"]:
                 ret_json["messages"].append(get_email(mdir, mail_id)) 
 
-            return serialize_json(ret_json)
+            return serialize_json(ret_json, protection=False)
 
 bottle.run(host='localhost', port='8080', reloader=True)

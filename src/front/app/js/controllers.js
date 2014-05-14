@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('KiteMail.controllers', []).
+angular.module('KiteMail.controllers', ['KiteMail.services']).
   controller('InboxesListController', function($scope) {
         $scope.inboxes = [
             {"name": "Inbox", },
@@ -10,7 +10,8 @@ angular.module('KiteMail.controllers', []).
             {"name": "Spam",  },];
             
 }).controller('MailsListController', ['$scope', 'Emails', 'Auth', function($scope, Emails, Auth) {
-        $scope.threads = Emails.threads({username: "testuser"});
+        console.log(Auth.username());
+        $scope.threads = Emails.threads({username: Auth.username()});
 }]).controller('LoginController', ['$scope', '$location', 'Auth', function($scope, $location, Auth) {
     $scope.doLogin = function(isValid) {
         if(isValid) {
@@ -23,11 +24,10 @@ angular.module('KiteMail.controllers', []).
             };
 
             Auth.doLogin($scope.username, $scope.password, success, failure); 
-            console.log("PASS" + $scope.password);            
         }
     }    
-}]).controller('ThreadController', ['$scope', '$routeParams', '$sce', 'Emails', function($scope, $routeParams, $sce, Emails) {
-    $scope.thread = Emails.thread({username: "testuser", "id": $routeParams.id});
+}]).controller('ThreadController', ['$scope', '$routeParams', '$sce', 'Emails', 'Auth', function($scope, $routeParams, $sce, Emails, Auth) {
+    $scope.thread = Emails.thread({username: Auth.username(), "id": $routeParams.id});
     $scope.trustHTML = function(html_code) {
         return $sce.trustAsHtml(html_code);
     };
