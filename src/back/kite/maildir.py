@@ -23,6 +23,10 @@ def extract_email_headers(msg):
 
     return msg_obj
 
+def format_plaintext_email(message):
+    """Replace \n by <br> to display as HTML"""
+    return message.replace('\n', '<br>')
+
 def extract_email(msg):
     """Extract all the interesting fields from an email"""
     msg_obj = extract_email_headers(msg)
@@ -34,7 +38,13 @@ def extract_email(msg):
     for part in mail.walk():
         if part.get_content_type() == 'text/plain':
             charset = part.get_content_charset()
-            payload = quopri.decodestring(part.get_payload()).decode(charset)
+
+            if charset != None:
+                payload = quopri.decodestring(part.get_payload()).decode(charset)
+            else: # assume ascii
+                payload = quopri.decodestring(part.get_payload()).decode('ascii')
+
+            payload = format_plaintext_email(payload)
             contents.append(payload)
 
     content = "".join(contents)
