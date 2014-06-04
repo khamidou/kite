@@ -2,16 +2,14 @@
 
 /* Controllers */
 
-angular.module('KiteMail.controllers', ['KiteMail.services']).
-  controller('InboxesListController', function($scope) {
-        $scope.inboxes = [
-            {"name": "Inbox", },
-            {"name": "Trash", },
-            {"name": "Spam",  },];
-            
-}).controller('MailsListController', ['$scope', 'Emails', 'Auth', function($scope, Emails, Auth) {
-        console.log(Auth.username());
+angular.module('KiteMail.controllers', ['KiteMail.services'])
+.controller('InboxesListController', ['$scope', function($scope) {
+        $scope.inboxes = ["Inbox"]; 
+
+}]).controller('MailsListController', ['$scope', 'Emails', 'Auth', function($scope, Emails, Auth) {
+
         $scope.threads = Emails.threads({username: Auth.username()});
+
 }]).controller('ThreadController', ['$scope', '$routeParams', '$sce', 'Emails', 'Auth', function($scope, $routeParams, $sce, Emails, Auth) {
     $scope.thread = Emails.thread({username: Auth.username(), "id": $routeParams.id});
     $scope.trustHTML = function(html_code) {

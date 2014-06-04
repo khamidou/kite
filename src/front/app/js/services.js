@@ -3,25 +3,27 @@
 /* Services */
 
 angular.module('KiteMail.services', ['ngResource', 'ngCookies']).
-factory('Emails', ['$resource',
-    function($resource) {
+factory('Emails', ['$resource', 'Utils',
+    function($resource, Utils) {
+        /* FIXME: maybe move this code to a response interceptor? */
+        var processThreads = function(data) {
+            var data = angular.fromJson(data);
+            return Utils.cleanDates(data);
+            };
+        
         var processThread = function(data) {
             var data = angular.fromJson(data);
-
-            // convert date string to js date objects
-            for(var i = 0; i < data.length; i++) {
-                data[i]["date"] = new Date(data[i]["date"]);
-            }
-
+            data.messages = Utils.cleanDates(data.messages);
+            debugger;
             return data;
-        }
+        };
 
         var res = $resource('/kite/:username/mail/:id', {}, {
             threads: {
                 method:'GET',
                 params:{username: "@username"},
                 isArray:true,
-                transformResponse: processThread,
+                transformResponse: processThreads,
             },
 
             thread: {
@@ -38,7 +40,15 @@ factory('Emails', ['$resource',
     return {
          date2array: function(date) {
             return (date+'').split(' ');
-        }
+        },
+        
+         /* cleandates: transform every field named "date" to a js Date object */
+         cleanDates: function(data) {
+            for(var i = 0; i < data.length; i++) {
+                data[i]["date"] = new Date(data[i]["date"]);
+            }
+            return data;
+        },
     };   
 }).factory('Auth', ['$cookies', '$http', 
     function($cookies, $http) {
