@@ -2,6 +2,7 @@
 
 import leveldb
 import utils
+
 try:
     import json
 except ImportError:
@@ -43,7 +44,11 @@ class Cabinet(object):
         del db
 
     def __iter__(self):
-        return self.cache.iterkeys()
+        try:
+            db = leveldb.LevelDB(self.filename)
+            return 
+        finally:
+            del db
 
     def __contains__(self, key):
         if self.cache.has_key(key):
@@ -61,6 +66,7 @@ class Cabinet(object):
         db = leveldb.LevelDB(self.filename)
         for key in self.cache:
             db.Put(key, json.dumps(self.cache[key], cls=self.encoder))
+        del db
 
 def DatetimeCabinet(path):
     return Cabinet(path, encoder=utils.DatetimeEncoder, decoder=utils.deserialize_datetime)
