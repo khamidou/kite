@@ -94,7 +94,6 @@ def process_new_email(path, threads_index):
             msg_id = os.path.basename(path)
             thread["messages"].append(msg_id)
             thread["date"] = datetime.datetime.utcnow()
-            thread["unread"] = True
 
             if from_field["address"] != thread["creator"]["address"]:
                 thread["lastreplyfrom"] = from_field
@@ -118,10 +117,11 @@ class ProcessorThread(threading.Thread):
 
                         if username not in self.threads_index:
                             print "Setting threads_index for user : %s" % username
-                            self.threads_index[username] = {"threads_index": [], "dirty": True}
+                            self.threads_index[username] = {"threads_index": [], "dirty": True, "unread_count": 0}
                         
                         process_new_email(event["path"], self.threads_index[username]["threads_index"])
                         self.threads_index[username]["dirty"] = True
+                        self.threads_index[username]["unread_count"] += 1
                     except IOError as e:
                         # This may be a Postfix/Dovecot temporary file. Ignore it.
                         print "caught ioerror %s" % e.strerror
