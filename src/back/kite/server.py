@@ -17,20 +17,21 @@ def with_valid_token(fn):
 
         cookie = request.get_cookie('XSRF-TOKEN')
         if cookie == None:
-            response.status = 401
-            return
+            abort(401, "Authentication error")
 
-        header = request.get_header('X-XSRF-TOKEN')[1:-1] # seems like the header is between quotes
+        header = request.get_header('X-XSRF-TOKEN', None)
+        if header == None:
+            abort(401, "Authentication error")
+
+        header = header[1:-1] # seems like the header is between quotes
         if header != cookie:
             print "HEADER %s CO %s" % (header, cookie)
             # CSRF protection
-            response.status = 401
-            return
+            abort(401, "Authentication error")
 
         token_data = token_dict.get(cookie, None)
         if token_data == None:
-            response.status = 401
-            return
+            abort(401, "Authentication error")
 
         # if token is older than four hours, invalidate it
         if token_data["creation_date"] - datetime.datetime.now() > datetime.timedelta(0, 4 * 60 * 60):
@@ -47,7 +48,7 @@ def index():
     username = request.json.get('username', None)
     password = request.json.get('password', None)
     if username == None or password == None:
-        response.status = 401
+        abort(401, "Authentication error")
         return
 
     if users.auth_user(username, password):
@@ -60,11 +61,10 @@ def index():
 @get('/kite/<user>/mail')
 @with_valid_token
 def index(user):
-            # FIXME: input sanitization - check permissions for user
             try:
                 threads_index = DatetimeCabinet("/home/kite/threads.db")
             except IOError:
-                response.status = 400
+                abort(500, "Invalid thread")
                 return
 
             ret_threads = []
