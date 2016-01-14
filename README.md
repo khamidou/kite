@@ -1,3 +1,5 @@
+This project is obsolete. Please use https://github.com/inboxapp/inbox instead.
+
 ## Kite, a modern webmail
 
 Kite is a webmail designed to look a lot like gmail and to be easily deployable on a single server.
