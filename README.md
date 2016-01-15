@@ -1,4 +1,7 @@
-This project is obsolete. Please use https://github.com/inboxapp/inbox instead.
+###This project is obsolete. Try one of these alternatives:
+
+* Nylas N1, an Electron / JS-based, extensible client: https://github.com/nylas/n1
+* Mailpile, a Python-based client more-similar to GMail: https://github.com/mailpile/Mailpile
 
 ## Kite, a modern webmail
 
