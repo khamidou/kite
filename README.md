@@ -1,3 +1,8 @@
+###This project is obsolete. Try one of these alternatives:
+
+* Nylas N1, an Electron / JS-based, extensible client: https://github.com/nylas/n1
+* Mailpile, a Python-based client more-similar to GMail: https://github.com/mailpile/Mailpile
+
 ## Kite, a modern webmail
 
 Kite is a webmail designed to look a lot like gmail and to be easily deployable on a single server.
